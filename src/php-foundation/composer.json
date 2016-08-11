@@ -1,0 +1,35 @@
+{
+    "name": "gismo/php-foundation",
+    "type": "library",
+    "description": "Gismo PHP Foundation Component",
+    "keywords": ["Gismo", "di", "dependency", "injection"],
+    "homepage": "https://getgismo.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Leuffen",
+            "email": "matthes@leuffen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gismo\\Component\\PhpFoundation\\": "src/PhpFoundation",
+            "Gismo\\Test\\Component\\PhpFoundation\\": "test"
+        },
+        "files": [
+            "src/functions.inc.php"
+        ],
+        "exclude-from-classmap": [
+            "/test/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

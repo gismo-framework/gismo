@@ -1,0 +1,30 @@
+{
+    "name": "gismo/http-foundation",
+    "type": "library",
+    "description": "Gismo Inline Templating component",
+    "keywords": ["Gismo", "http"],
+    "homepage": "https://getgismo.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Leuffen",
+            "email": "matthes@leuffen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "gismo/php-foundation": "*"
+    },
+    "autoload": {
+        "psr-4": { "Gismo\\Component\\HttpFoundation\\": "src/HttpFoundation" },
+        "exclude-from-classmap": [
+            "/test/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+<start>
+    <elem>
+        <!-- comment -->
+        <!--
+
+        MultiLine -->
+        <sub></sub>
+        <singlesub/>
+    </elem>
+    <elem2 att="">Text</elem2>
+</start>

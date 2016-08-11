@@ -1,0 +1,33 @@
+{
+    "name": "gismo/plugin",
+    "type": "library",
+    "description": "Gismo plugin Component",
+    "keywords": ["Gismo", "plugin"],
+    "homepage": "https://getgismo.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Leuffen",
+            "email": "matthes@leuffen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "gismo/php-foundation": "*",
+        "gismo/di": "*",
+        "gismo/template": "*",
+        "gismo/application": "*"
+    },
+    "autoload": {
+        "psr-4": { "Gismo\\Component\\Plugin\\": "src/Plugin" },
+        "exclude-from-classmap": [
+            "/test/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

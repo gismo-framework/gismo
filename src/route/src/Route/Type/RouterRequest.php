@@ -1,0 +1,46 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: matthes
+ * Date: 09.08.16
+ * Time: 23:46
+ */
+
+
+    namespace Gismo\Component\Route\Type;
+
+
+    use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\PhpFoundation\Accessor\UrlAccessor;
+
+    class RouterRequest {
+
+
+        public function __construct(array $route, string $method="GET") {
+            $this->route = $route;
+            $this->method = $method;
+        }
+
+
+        /**
+         * Route path array
+         *
+         * @var string[]
+         */
+        public $route;
+
+        /**
+         * Http Request Method
+         *
+         * @var string
+         */
+        public $method;
+
+
+        public static function BuildFromRequest(Request $request) : RouterRequest {
+            $paths = $request->ROUTE_PATH->asArray();
+            return new self($paths, $request->METHOD);
+        }
+
+
+    }

@@ -1,0 +1,31 @@
+{
+    "name": "gismo/template",
+    "type": "library",
+    "description": "Gismo Inline Templating component",
+    "keywords": ["Gismo", "template", "html"],
+    "homepage": "https://qtoix.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Leuffen",
+            "email": "matthes@leuffen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "symfony/expression-language": "^3.1",
+        "symfony/yaml": "^3.1"
+    },
+    "autoload": {
+        "psr-4": { "Gismo\\Component\\Template\\": "src/Template" },
+        "exclude-from-classmap": [
+            "/test/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<?php
+
+
+    namespace Gismo\Component\Di\Type;
+
+    use Gismo\Component\Di\DiContainer;
+
+    class GoServiceDiDefinition extends GoAbstractDiDefinition {
+
+        private $factory;
+
+        private $instance = null;
+
+        private $isResolved = false;
+
+        
+
+
+        public function __construct(callable $factory) {
+            $this->factory = $factory;
+            $this->_autodetectReturnType($factory);
+        }
+
+
+        /**
+         * Filters are only applied once on services.
+         *
+         * @param DiContainer $di
+         * @return mixed|null
+         */
+        public function __diGetInstance(DiContainer $di) {
+            if ( ! $this->isResolved) {
+                $ret = $di($this->factory);
+                $this->instance = $this->_applyFilters($ret, $di);
+                $this->isResolved = true;
+            }
+            return $this->instance;
+        }
+
+    }
