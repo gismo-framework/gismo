@@ -1,8 +1,8 @@
 {
-    "name": "gismo/application",
+    "name": "gismo/gismo",
     "type": "library",
-    "description": "Gismo Application Component",
-    "keywords": ["Gismo", "application"],
+    "description": "Gismo All in one",
+    "keywords": ["Gismo", "framework"],
     "homepage": "https://getgismo.com",
     "license": "MIT",
     "authors": [
