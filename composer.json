@@ -30,7 +30,7 @@
             "Gismo\\Component\\PhpFoundation\\": "src/php-foundation/src/PhpFoundation",
 
             "Gismo\\Component\\Plugin\\": "src/plugin/src/Plugin",
-
+            "Gismo\\Component\\DevTools\\": "src/dev-tools/src/DevTools",
             "Gismo\\Component\\Route\\": "src/route/src/Route",
             "Gismo\\Component\\Logging\\": "src/logging/src/Logging",
             "Gismo\\Component\\Template\\": "src/template/src/Template"

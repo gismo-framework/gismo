@@ -1,0 +1,30 @@
+{
+    "name": "gismo/dev-tools",
+    "type": "library",
+    "description": "Gismo Developing Tools Component",
+    "keywords": ["Gismo", "di", "dependency", "injection"],
+    "homepage": "https://getgismo.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Leuffen",
+            "email": "matthes@leuffen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "gismo/php-foundation": "*"
+    },
+    "autoload": {
+        "psr-4": { "Gismo\\Component\\DevTools\\": "src/DevTools" },
+        "exclude-from-classmap": [
+            "/test/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
