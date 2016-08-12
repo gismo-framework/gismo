@@ -17,7 +17,7 @@
 
         public function __construct()
         {
-            echo "Navi Create";
+
         }
 
         /**
