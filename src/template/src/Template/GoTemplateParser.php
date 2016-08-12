@@ -75,7 +75,6 @@
             libxml_use_internal_errors(false);
             $xhtml = $doc->saveXML();
 
-            echo $xhtml;
 
             $this->loadXml($xhtml);
         }

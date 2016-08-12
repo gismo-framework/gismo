@@ -10,12 +10,13 @@
 
     
 
+    use Gismo\Component\Api\GoDiService_Api;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\Partial\GoDiService_Partial;
     use Gismo\Component\Route\GoDiService_Route;
 
     class Context extends DiContainer {
-        use GoDiService_Route, GoDiService_Partial;
+        use GoDiService_Route, GoDiService_Partial, GoDiService_Api;
         
 
 

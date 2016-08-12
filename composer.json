@@ -15,7 +15,8 @@
         "php": ">=7.0",
         "symfony/expression-language": "^3.1",
         "symfony/yaml": "^3.1",
-        "firephp/firephp-core": "*"
+        "firephp/firephp-core": "*",
+        "doctrine/annotations": "*"
     },
     "autoload": {
         "psr-4": {
@@ -33,7 +34,9 @@
             "Gismo\\Component\\DevTools\\": "src/dev-tools/src/DevTools",
             "Gismo\\Component\\Route\\": "src/route/src/Route",
             "Gismo\\Component\\Logging\\": "src/logging/src/Logging",
-            "Gismo\\Component\\Template\\": "src/template/src/Template"
+            "Gismo\\Component\\Template\\": "src/template/src/Template",
+
+            "Gismo\\Component\\Annotation\\": "src/annotation/src/Annotation"
         },
         "files": [
             "src/php-foundation/src/functions.inc.php"

@@ -20,8 +20,7 @@
      * Class GoAction
      * @package Gismo\Component\Route
      *
-     * @property ArrayAccessOrderedList $beforeCall
-     * @property ArrayAccessOrderedList $afterCall
+     *
      * @property ArrayAccessOrderedList $inputFilters
      * @property ArrayAccessOrderedList $outputFilters
      */
@@ -141,35 +140,7 @@
         }
 
         public function __invoke(array $params = []) {
-            if ($this->beforeCall !== null) {
-                $this->beforeCall->each(function ($fn) use (&$params) {
-                    $params = $this->mDi->__invoke($fn,
-                        [
-                            "§§parameters" => $params,
-                            "§§action" => $this,
-                            GoAction::class => $this
-                        ]
-                    );
-                });
-            }
-            $ret = null;
-            if ($this->fn !== null) {
-                $ret = $this->mDi->__invoke($this->fn, $params);
-            }
 
-            if ($this->afterCall !== null) {
-                $this->afterCall->each(function ($fn) use (&$ret, $params) {
-                    $ret = $this->mDi->__invoke($fn,
-                        [
-                            "§§parameters" => $params,
-                            "§§return"  => $ret,
-                            "§§action"  => $this,
-                            GoAction::class => $this
-                        ]
-                    );
-                });
-            }
-            return $ret;
         }
 
         private $mUseHttpBodyAsParameter = null;
