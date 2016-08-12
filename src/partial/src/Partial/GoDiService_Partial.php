@@ -13,17 +13,7 @@
 
         private function __di_init_service_partial() {
 
-            $this[0] = function ($§§name) {
 
-                if (class_exists($§§name)) {
-                    $ref = new \ReflectionClass($§§name);
-                    if ($ref->implementsInterface(Partial::class)) {
-                        return $this->factory(function () use ($§§name) {
-                            return new $§§name($this);
-                        });
-                    }
-                }
-            };
         }
 
     }
