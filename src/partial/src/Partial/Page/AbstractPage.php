@@ -13,7 +13,7 @@
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\Partial\Renderable;
 
-    abstract class AbstractPage implements Renderable{
+    abstract class AbstractPage implements Renderable {
 
 
         /**

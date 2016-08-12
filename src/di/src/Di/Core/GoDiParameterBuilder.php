@@ -93,9 +93,12 @@
                 }
                 
                 if ($curParam->getClass() !== null) {
-                    if (isset ($this->mDi[$curParam->getClass()->getName()])) {
-                        $buildParams[] = $this->mDi[$curParam->getClass()->getName()];
+                    try {
+                        $instance = $this->mDi[$curParam->getClass()->getName()];
+                        $buildParams[] = $instance;
                         continue;
+                    } catch (NoFactoryException $e) {
+
                     }
                 }
                 

@@ -51,8 +51,25 @@
         protected function _applyFilters ($input, DiContainer $di) {
             if ($this->filters === null)
                 return $input;
-            $this->filters->each(function ($what, $prio, $alias) use (&$input, $di) {
-                $input = $di($what);
+
+            $requireClassName = null;
+            if (is_object($input)) {
+                $requireClassName = get_class($input);
+            }
+
+            $this->filters->each(function ($what, $prio, $alias) use (&$input, $di, $requireClassName) {
+
+                $input = $di($what, ["§§input" => $input]);
+                if ($requireClassName !== null) {
+                    if ( ! is_object($input)) {
+                        $acc = new CallableAccessor($what);
+                        throw new \InvalidArgumentException("Filter {$acc} must return object type $requireClassName.");
+                    }
+                    if (get_class($input) !== $requireClassName) {
+                        $acc = new CallableAccessor($what);
+                        throw new \InvalidArgumentException("Filter {$acc} must return object type $requireClassName");
+                    }
+                }
             });
             return $input;
         }

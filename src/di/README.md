@@ -122,6 +122,20 @@ Internal Parameters (defined by Framework) start with double `§`: Example
 `$§§parameters`.
 
 
+
+## DiProviders (Instanciating a variety of Classes)
+
+DiContainer will check for 
+
+```php
+$di[0] = function ($§§name) {
+    return $di->factory(function () {
+        
+    });  
+};
+```
+
+
 ## DiServices (Extending the DiContainer)
 
 DiServices are traits that extend the DiContainer.

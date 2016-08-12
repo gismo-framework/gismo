@@ -74,5 +74,20 @@
         }
 
 
+        public function __toString()
+        {
+            if (is_array($this->callable)) {
+                if (is_object($this->callable[0])) {
+                    $oRef = new \ReflectionObject($this->callable[0]);
+                    $mRef = $oRef->getMethod($this->callable[1]);
+                    return "{$oRef->getName()}::{$mRef->getName()}()";
+                }
+            } else {
+                $fref = new \ReflectionFunction($this->callable);
+                return "function[{$fref->getFileName()}:{$fref->getStartLine()} - {$fref->getEndLine()}]";
+            }
+            throw new \InvalidArgumentException("Cannot parse callable");
+        }
+
 
     }

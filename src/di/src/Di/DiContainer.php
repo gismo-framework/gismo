@@ -159,8 +159,20 @@
          */
         public function offsetGet($offset) {
             $def = $this->diDef[$offset];
-            if ($def instanceof GoNullFactoryDiDefinition)
-                throw new NoFactoryException("No factory found for '$offset'");
+            if ($def instanceof GoNullFactoryDiDefinition) {
+
+                $this->diProvider->each(function ($what) use ($offset, &$def) {
+                    $ret = $this($what, ["§§name" => $offset]);
+                    if ($ret instanceof GoAbstractDiDefinition) {
+                        $def->__diReplace($ret);
+                        $def = $ret;
+                        $this[$offset] = $def;
+                        return false; // skip further processing
+                    }
+                });
+                if ($def instanceof GoNullFactoryDiDefinition)
+                    throw new NoFactoryException("No factory found for '$offset'");
+            }
             return $def->__diGetInstance($this);
         }
 
@@ -233,6 +245,8 @@
 
             // Setting Provider
             if (is_int($offset)) {
+                if ( ! is_callable($value))
+                    throw new \InvalidArgumentException("Prodider must be callable");
                 $this->diProvider->add($offset, $value);
                 return;
             }
