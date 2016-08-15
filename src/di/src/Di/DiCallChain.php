@@ -16,26 +16,64 @@
         /**
          * @var DiContainer
          */
-        private $diContainer;
+        private $mDi;
+
         private $filterOnly;
 
         private $call = null;
 
+        /**
+         * @var OrderedList
+         */
         private $inputFilter;
+        /**
+         * @var OrderedList
+         */
         private $outputFilter;
 
         public function __construct(DiContainer $di, bool $filterOnly = false)
         {
-            $this->diContainer = $di;
+            $this->mDi = $di;
             $this->filterOnly = $filterOnly;
-            $this->inputFilter = new OrderedList();
-            $this->outputFilter = new OrderedList();
         }
 
 
         public function __invoke($params)
         {
+            if ($this->inputFilter !== null) {
+                $this->inputFilter->each(function ($fn) use (&$params) {
+                    $params = $this->mDi->__invoke($fn,
+                                                   [
+                                                           "§§parameters" => $params,
+                                                           "§§apiCall" => $this,
+                                                   ]
+                    );
+                    if ($params === false)
+                        return false;
+                });
+            }
+            if ($this->filterOnly)
+                return $params;
 
+            $ret = null;
+            if ($this->call !== null) {
+                $ret = $this->mDi->__invoke($this->call, $params);
+            }
+
+            if ($this->outputFilter !== null) {
+                $this->outputFilter->each(function ($fn) use (&$ret, $params) {
+                    $ret = $this->mDi->__invoke($fn,
+                                                [
+                                                        "§§parameters" => $params,
+                                                        "§§return"  => $ret,
+                                                        "§§apiCall"  => $this,
+                                                ]
+                    );
+                    if ($ret === false)
+                        return false;
+                });
+            }
+            return $ret;
         }
 
 
@@ -68,7 +106,16 @@
                 if ( ! is_callable($value)) {
                     throw new \InvalidArgumentException("Filter must be valid callable");
                 }
-                $this->inputFilter->add($offset, $value);
+                if ($offset > 0) {
+                    if ($this->inputFilter === null)
+                        $this->inputFilter = new OrderedList();
+                    $this->inputFilter->add($offset, $value);
+                } else if ($offset < 0) {
+                    if ($this->outputFilter === null)
+                        $this->outputFilter = new OrderedList();
+                    $this->outputFilter->add($offset, $value);
+                }
+
                 return;
             }
         }

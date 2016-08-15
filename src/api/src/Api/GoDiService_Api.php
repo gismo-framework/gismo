@@ -7,6 +7,7 @@
      */
 
     namespace Gismo\Component\Api;
+    use Gismo\Component\Di\DiCallChain;
 
 
     /**
@@ -18,7 +19,9 @@
     trait GoDiService_Api {
 
         private function __di_init_service_api() {
-            $this->api = new GoApiContainer($this);
+            $this["api.__PROTO__"] = $this->factory(function () {
+                return new DiCallChain($this);
+            });
         }
 
     }
