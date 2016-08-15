@@ -49,8 +49,8 @@ $di->route->mount("/some", function () use ($di) {
 ### Intercepting
 
 ```php
-$di->route["alias"]->beforeCall[100] = function (array $§§parameters) { return $§§parameters; };
-$di->route["alias"]->afterCall[] = function ($§§return) { return $§§return };
+$di->route["route.alias"][100] = function (array $§§parameters) { return $§§parameters; };
+$di->route["route.alias"][-1] = function ($§§return) { return $§§return };
 ```
 
 

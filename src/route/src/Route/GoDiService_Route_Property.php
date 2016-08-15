@@ -49,18 +49,14 @@
         }
         
         
-        public function add($route=null, callable $cb=null) : GoAction {
-            $routeObj = null;
-            if ($route !== null) {
-                $route = $this->mountedRoutePrefix . $route;
-                $routeObj = new GoRoute($route);
-            }
+        public function add($route, callable $cb) : GoAction {
+            $route = $this->mountedRoutePrefix . $route;
+            $routeObj = new GoRoute($route);
+
             $action = new GoAction($this->di, $routeObj);
-            if ($cb !== null)
-                $action->callback($cb);
-            if ($routeObj !== null) {
-                $this->container->add($routeObj, $action);
-            }
+            $action[0] = $cb;
+
+            $this->container->add($routeObj, $action);
             return $action;
         }
 
