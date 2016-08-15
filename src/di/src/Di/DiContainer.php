@@ -8,7 +8,9 @@
 
 
     namespace Gismo\Component\Di;
-    
+
+
+
 
     use Gismo\Component\Di\Type\DiClosureFactory;
     use Gismo\Component\Di\Type\DiFactory;
@@ -161,15 +163,26 @@
             $def = $this->diDef[$offset];
             if ($def instanceof GoNullFactoryDiDefinition) {
 
-                $this->diProvider->each(function ($what) use ($offset, &$def) {
-                    $ret = $this($what, ["§§name" => $offset]);
-                    if ($ret instanceof GoAbstractDiDefinition) {
-                        $def->__diReplace($ret);
-                        $def = $ret;
-                        $this[$offset] = $def;
-                        return false; // skip further processing
-                    }
-                });
+                $firstPart = explode(".", $offset)[0];
+                $prototypeName = $firstPart . ".__PROTO__";
+                if (isset ($this->diDef[$prototypeName])) {
+                    $proto = $this->diDef[$prototypeName];
+                    $proto = clone $proto;
+                    $def->__diReplace($proto);
+                    $this[$offset] = $def = $proto;
+                } else {
+
+
+                    $this->diProvider->each(function ($what) use ($offset, &$def) {
+                        $ret = $this($what, ["§§name" => $offset]);
+                        if ($ret instanceof GoAbstractDiDefinition) {
+                            $def->__diReplace($ret);
+                            $def = $ret;
+                            $this[$offset] = $def;
+                            return false; // skip further processing
+                        }
+                    });
+                }
                 if ($def instanceof GoNullFactoryDiDefinition)
                     throw new NoFactoryException("No factory found for '$offset'");
             }
