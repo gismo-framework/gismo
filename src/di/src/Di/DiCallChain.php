@@ -41,16 +41,20 @@
         public function __invoke($params)
         {
             if ($this->inputFilter !== null) {
-                $this->inputFilter->each(function ($fn) use (&$params) {
-                    $params = $this->mDi->__invoke($fn,
-                                                   [
-                                                           "§§parameters" => $params,
-                                                           "§§apiCall" => $this,
-                                                   ]
-                    );
+                $ret = $this->inputFilter->each(function ($fn) use (&$params) {
+                    $callParams = $params;
+                    $callParams["§§parameters"] = $params;
+                    $callParams["§§data"] = $params;
+                    $retParams = $this->mDi->__invoke($fn, $callParams);
+                    if (is_array($retParams)) {
+                        $params = $retParams;
+                    }
                     if ($params === false)
                         return false;
+                    return true;
                 });
+                if ($ret === false)
+                    return false;
             }
             if ($this->filterOnly)
                 return $params;
@@ -61,7 +65,7 @@
             }
 
             if ($this->outputFilter !== null) {
-                $this->outputFilter->each(function ($fn) use (&$ret, $params) {
+                $postRet = $this->outputFilter->each(function ($fn) use (&$ret, $params) {
                     $ret = $this->mDi->__invoke($fn,
                                                 [
                                                         "§§parameters" => $params,
@@ -72,6 +76,8 @@
                     if ($ret === false)
                         return false;
                 });
+                if ($postRet === false)
+                    return false;
             }
             return $ret;
         }

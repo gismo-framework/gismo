@@ -61,7 +61,7 @@
                     continue;
                 $what = $this->item[$alias];
                 if ($fn($what, $prio, $alias) === false)
-                    break;
+                    return false;
             }
         }
 

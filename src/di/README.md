@@ -210,7 +210,7 @@ Using the `filter()` Method to bind a Filter to the Event Handler
 
 ```
 $di["event.someEventName"] = filter(function (DiCallChain $chain) {
-    $chain[9] = function (§§input) {
+    $chain[9] = function (§§data) {
         reuturn false; // Stop processing
     }
 });
