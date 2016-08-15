@@ -15,6 +15,7 @@
     class GoDocumentNode implements GoNode {
 
 
+        public $processingInstructions = "";
         public $childs = [];
 
 
@@ -22,8 +23,11 @@
             
         }
 
+
+
+
         public function run(array $scope, GoDirectiveExecBag $execBag) {
-            $output = "";
+            $output = $this->processingInstructions;
             foreach ($this->childs as $child) {
                 $output .= $child->run($scope, $execBag);
             }

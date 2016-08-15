@@ -81,18 +81,15 @@
 
 
 
-        public function render(string $inputTemplateData, array $scopeData, &$structOutputData = [], $convertHtmlInput=false) : string
+        public function render(string $inputTemplateData, array $scopeData, &$structOutputData = []) : string
         {
             $scope = $this->mExecBag->scopePrototype;
             foreach ($scopeData as $key => $val) {
                 $scope[$key] = $val;
             }
 
-            if ($convertHtmlInput) {
-                $this->mParser->loadHtml($inputTemplateData);
-            } else {
-                $this->mParser->loadXml($inputTemplateData);
-            }
+
+            $this->mParser->loadHtml($inputTemplateData);
 
             $template = $this->mParser->parse();
 
@@ -105,12 +102,12 @@
             if ($this->mTemplateStore === null)
                 throw new \InvalidArgumentException("No template-store registered. (Resolving templateUri to Template disabled)");
             $templateData = $this->mTemplateStore->getTemplate($templateUri);
-            return $this->render($templateData, $scopeData, $dummy, true);
+            return $this->render($templateData, $scopeData, $dummy);
         }
 
         public function renderHtmlFile($filename, array $scopeData = []) : string
         {
-            return $this->render(file_get_contents($filename), $scopeData, $data, true);
+            return $this->render(file_get_contents($filename), $scopeData, $data);
         }
         
         
