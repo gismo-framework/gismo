@@ -22,7 +22,7 @@
          }
 
 
-         public function __diGetInstance(DiContainer $di) {
+         public function __diGetInstance(DiContainer $di, array $params) {
              $val = $this->value;
              $val = $this->_applyFilters($val, $di);
              return $val;

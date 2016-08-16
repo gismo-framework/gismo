@@ -28,7 +28,7 @@
         
 
 
-        public function __diGetInstance(DiContainer $di) {
+        public function __diGetInstance(DiContainer $di, array $params) {
             throw new \InvalidArgumentException("NullFactory!");
         }
 

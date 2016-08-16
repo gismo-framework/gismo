@@ -186,7 +186,7 @@
                 if ($def instanceof GoNullFactoryDiDefinition)
                     throw new NoFactoryException("No factory found for '$offset'");
             }
-            return $def->__diGetInstance($this);
+            return $def->__diGetInstance($this, ["§§name" => $offset]);
         }
 
 

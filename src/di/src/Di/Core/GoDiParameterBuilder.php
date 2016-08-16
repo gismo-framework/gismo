@@ -64,7 +64,7 @@
 
                 // Check Overrides
                 if (isset ($this->override[$curParam->getName()])) {
-                    $buildParams[] = $this->override[$curParam->getName()]->__diGetInstance($this->mDi);
+                    $buildParams[] = $this->override[$curParam->getName()]->__diGetInstance($this->mDi, ["§§name" => $curParam->getName()]);
                     continue;
                 }
 
@@ -74,7 +74,7 @@
                 }
 
                 if ($curParam->getClass() !== null && isset ($this->override[$curParam->getClass()->getName()])) {
-                    $buildParams[] = $this->override[$curParam->getClass()->getName()]->__diGetInstance($this->mDi);
+                    $buildParams[] = $this->override[$curParam->getClass()->getName()]->__diGetInstance($this->mDi, ["§§name" => $curParam->getName()]);
                     continue;
                 }
 

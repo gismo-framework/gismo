@@ -28,9 +28,9 @@
          * @param DiContainer $di
          * @return mixed|null
          */
-        public function __diGetInstance(DiContainer $di) {
+        public function __diGetInstance(DiContainer $di, array $params) {
             if ( ! $this->isResolved) {
-                $ret = $di($this->factory);
+                $ret = $di($this->factory, $params);
                 $this->instance = $this->_applyFilters($ret, $di);
                 $this->isResolved = true;
             }

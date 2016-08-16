@@ -20,8 +20,8 @@
         }
 
 
-        public function __diGetInstance(DiContainer $di) {
-            $val = $di($this->factory);
+        public function __diGetInstance(DiContainer $di, array $params) {
+            $val = $di($this->factory, $params);
             $val = $this->_applyFilters($val, $di);
             return $val;
         }

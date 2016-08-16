@@ -104,6 +104,6 @@
         }
 
         
-        abstract public function __diGetInstance(DiContainer $container);
+        abstract public function __diGetInstance(DiContainer $container, array $params);
 
     }
