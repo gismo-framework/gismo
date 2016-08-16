@@ -1,8 +1,8 @@
 <?php
 
     namespace Gismo\Test\Component;
-    use Gismo\Component\Template\GoTemplate;
-    use Gismo\Component\Template\GoTemplateParser;
+    use Html5\Template\GoTemplate;
+    use Html5\Template\GoTemplateParser;
 
     /**
      * Created by PhpStorm.

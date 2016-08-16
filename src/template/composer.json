@@ -1,9 +1,9 @@
 {
-    "name": "gismo/template",
+    "name": "html5/template",
     "type": "library",
-    "description": "Gismo Inline Templating component",
-    "keywords": ["Gismo", "template", "html"],
-    "homepage": "https://qtoix.com",
+    "description": "Inline Templating component",
+    "keywords": ["html5", "template", "html"],
+    "homepage": "http://leuffen.de",
     "license": "MIT",
     "authors": [
         {
@@ -18,7 +18,7 @@
         "html5/htmlreader": "*"
     },
     "autoload": {
-        "psr-4": { "Gismo\\Component\\Template\\": "src/Template" },
+        "psr-4": { "Html5\\Template\\": "src/Template" },
         "exclude-from-classmap": [
             "/test/"
         ]

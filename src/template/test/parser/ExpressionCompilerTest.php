@@ -9,7 +9,7 @@
     
     namespace Gismo\Test\Component;
 
-    use Gismo\Component\Template\Expression\GoExpressionEvaluator;
+    use Html5\Template\Expression\GoExpressionEvaluator;
 
     class ExpressionCompilerTest extends \PHPUnit_Framework_TestCase
     {

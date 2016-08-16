@@ -9,7 +9,7 @@
     namespace Gismo\Test\Component;
 
 
-    use Gismo\Component\Template\GoTemplate;
+    use Html5\Template\GoTemplate;
 
     class ParserTest extends \PHPUnit_Framework_TestCase
     {

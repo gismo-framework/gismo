@@ -9,11 +9,11 @@
     namespace Gismo\Component\Template;
 
    
-    use Gismo\Component\Template\Datastore\GoTemplateStore;
-    use Gismo\Component\Template\Directive\GoDirective;
-    use Gismo\Component\Template\Directive\GoDirectiveExecBag;
-    use Gismo\Component\Template\Expression\GoExpressionEvaluator;
-    use Gismo\Component\Template\Expression\Scope;
+    use Html5\Template\Datastore\GoTemplateStore;
+    use Html5\Template\Directive\GoDirective;
+    use Html5\Template\Directive\GoDirectiveExecBag;
+    use Html5\Template\Expression\GoExpressionEvaluator;
+    use Html5\Template\Expression\Scope;
 
     class GoTemplate
     {
@@ -29,10 +29,6 @@
          */
         private $mExecBag;
 
-        /**
-         * @var GoTemplateStore|null
-         */
-        private $mTemplateStore = NULL;
 
         
         public function __construct()
@@ -42,10 +38,7 @@
         }
 
 
-        public function setTemplateStore (GoTemplateStore $store)
-        {
-            $this->mTemplateStore = $store;
-        }
+
 
         public function getTemplateStore ()
         {
@@ -96,14 +89,6 @@
             return $template->run($scope, $this->mExecBag);
         }
 
-
-        public function renderHtml($templateUri, array $scopeData) : string
-        {
-            if ($this->mTemplateStore === null)
-                throw new \InvalidArgumentException("No template-store registered. (Resolving templateUri to Template disabled)");
-            $templateData = $this->mTemplateStore->getTemplate($templateUri);
-            return $this->render($templateData, $scopeData, $dummy);
-        }
 
         public function renderHtmlFile($filename, array $scopeData = []) : string
         {
