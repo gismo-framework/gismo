@@ -23,7 +23,7 @@
             });
 
             $this["page.__PROTO__"] = $this->service(function ($§§name) {
-                $p = new Partial($this);
+                $p = new Page($this);
                 $p[0] = function () use ($§§name) {
                     return "No Template defined: $§§name";
                 };
