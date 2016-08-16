@@ -17,7 +17,8 @@
         "symfony/yaml": "^3.1",
         "firephp/firephp-core": "*",
         "doctrine/annotations": "*",
-        "html5/htmlreader": "*"
+        "html5/htmlreader": "*",
+        "html5/template": "*"
     },
     "autoload": {
         "psr-4": {
