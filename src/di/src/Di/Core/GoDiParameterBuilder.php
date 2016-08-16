@@ -41,11 +41,9 @@
                 $this->override[$injectableName] = $valueOrFactory;
                 return $this;
             }
-            if (is_callable($valueOrFactory)) {
-                $valueOrFactory = new GoFactoryDiDefinition($valueOrFactory);
-            } else {
-                $valueOrFactory = new GoConstantDiDefinition($valueOrFactory);
-            }
+
+            $valueOrFactory = new GoConstantDiDefinition($valueOrFactory);
+
             $this->override[$injectableName] = $valueOrFactory;
             return $this;
         }

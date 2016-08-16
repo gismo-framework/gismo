@@ -64,8 +64,7 @@
 
         public function __debugInfo() {
             return [
-                "route" => (string)$this->mRoute,
-                "bindName" => $this->getBindName(),
+                "route" => (string)$this->mRoute
             ];
         }
     } 

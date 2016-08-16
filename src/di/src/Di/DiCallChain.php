@@ -69,16 +69,15 @@
 
 
             if ($this->outputFilter !== null) {
+                $params["§§return"] = $ret;
                 $postRet = $this->outputFilter->each(function ($fn) use (&$ret, $params) {
-                    $ret = $this->mDi->__invoke($fn,
-                                                [
-                                                        "§§parameters" => $params,
-                                                        "§§return"  => $ret,
-                                                        "§§apiCall"  => $this,
-                                                ]
-                    );
+                    $ret = $this->mDi->__invoke($fn, $params);
+
                     if ($ret === false)
                         return false;
+                    if ($ret !== null) {
+                        $params["§§return"] = $ret;
+                    }
                 });
                 if ($postRet === false)
                     return false;

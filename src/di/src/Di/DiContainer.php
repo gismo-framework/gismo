@@ -99,6 +99,16 @@
         }
 
         /**
+         * Set a Filter on a DiName
+         *
+         * Available Parameters:
+         * $§§input : The Value to be filtered
+         *
+         * Return Values:
+         * void     : Keep the Value
+         * false    : Skip preceeding filters
+         * <mixed>  : Overwrite $§§input for next filter
+         *
          * @param callable $fn
          * @return GoFilterDefinition
          */
@@ -123,8 +133,8 @@
             foreach ($params as $key => $val) {
                 $paramBuilder->override($key, $val);
             }
-            $ref = (new CallableAccessor($fn))->getReflection();
-            
+
+            $ref = ($accessor = new CallableAccessor($fn))->getReflection();
             $paramValues = $paramBuilder->build($ref->getParameters());
             return $fn(...$paramValues);
         }
@@ -173,7 +183,8 @@
                     $proto = $this->diDef[$prototypeName];
                     $proto = clone $proto;
                     $def->__diReplace($proto);
-                    $this[$offset] = $def = $proto;
+                    $this->__setDiDef($offset, $proto);
+                    $def = $proto;
                 } else {
 
 
@@ -283,5 +294,10 @@
                 throw new \InvalidArgumentException("Key '$offset' is protected with message: {$message}");
 
             $this->diDef[$offset] = $this->diDef[$offset]->__diReplace(new GoNullFactoryDiDefinition());
+        }
+
+
+        public function __debugInfo() {
+            return ["DiContainer"=>"Use DiContainer::debug() to view contents"];
         }
     }

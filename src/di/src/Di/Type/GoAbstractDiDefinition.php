@@ -60,17 +60,21 @@
 
             $this->filters->each(function ($what, $prio, $alias) use (&$input, $di, $requireClassName) {
 
-                $input = $di($what, ["§§input" => $input]);
+                $return = $di($what, ["§§input" => $input]);
                 if ($requireClassName !== null) {
-                    if ( ! is_object($input)) {
+                    if ($return === null) {
+                        $return = $input;
+                    }
+                    if ( ! is_object($return)) {
                         $acc = new CallableAccessor($what);
                         throw new \InvalidArgumentException("Filter {$acc} must return object type $requireClassName.");
                     }
-                    if (get_class($input) !== $requireClassName) {
+                    if (get_class($return) !== $requireClassName) {
                         $acc = new CallableAccessor($what);
                         throw new \InvalidArgumentException("Filter {$acc} must return object type $requireClassName");
                     }
                 }
+                $input = $return;
             });
             return $input;
         }
