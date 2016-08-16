@@ -18,7 +18,7 @@
      * @package Gismo\Component\Route\Annotations
      *
      * @Annotation
-     * @Target("METHOD|CLASS")
+     * @Target("METHOD")
      */
     class Api {
 
@@ -28,21 +28,6 @@
          * @var string
          */
         public $bind;
-
-        /**
-         * @Enum("POST", "GET", "PUT", "DELETE", "*")
-         */
-        public $method = "*";
-
-
-        /**
-         * Default: auto
-         *
-         *
-         *
-         * @var string
-         */
-        public $route;
 
     }
 

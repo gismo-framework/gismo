@@ -11,7 +11,9 @@
 
 
     use Gismo\Component\Di\DiContainer;
+    use Gismo\Component\Route\Ex\NoRouteDefinedException;
     use Gismo\Component\Route\GoAction;
+    use Gismo\Component\Route\Type\RouterRequest;
 
     class GoRouter {
 
@@ -42,7 +44,7 @@
         public function dispatch (RouterRequest $request) {
             $action = $this->container->findBestAction($request);
             if ($action === null)
-                throw new NoRouteDefiniedException(["No route defined for ?", $request]);
+                throw new NoRouteDefinedException(["No route defined for ?", (string)$request]);
             $action->dispatch($request);
         }
 

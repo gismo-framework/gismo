@@ -9,7 +9,6 @@
     namespace Gismo\Component\Route;
 
 
-    use Doctrine\Instantiator\Exception\InvalidArgumentException;
     use Gismo\Component\Di\DiCallChain;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
@@ -57,14 +56,10 @@
 
         public function dispatch(RouterRequest $request) {
             if ($this->mRoute === null)
-                throw new InvalidArgumentException("Action has no route assigned. Use call() instead of dispatch() for direct calling");
+                throw new \InvalidArgumentException("Action has no route assigned. Use call() instead of dispatch() for direct calling");
 
             $params = $this->mRoute->buildParams($request);
-            $this->_runInputFilters($request, $params);
-
             $output = $this->__invoke($params);
-
-            return $this->_runOutputFilters($request, $output);
         }
 
         public function __debugInfo() {

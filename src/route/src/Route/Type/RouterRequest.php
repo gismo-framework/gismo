@@ -39,8 +39,15 @@
 
         public static function BuildFromRequest(Request $request) : RouterRequest {
             $paths = $request->ROUTE_PATH->asArray();
+            for ($i=0; $i<count ($paths); $i++) {
+                $paths[$i] = urldecode(urldecode($paths[$i]));
+            }
             return new self($paths, $request->METHOD);
         }
 
+
+        public function __toString() {
+            return "[RouteRequest:" . implode (" / ", $this->route). "]";
+        }
 
     }

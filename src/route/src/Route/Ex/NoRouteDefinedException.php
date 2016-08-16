@@ -10,6 +10,6 @@
 
     use Gismo\Component\PhpFoundation\Exception\PfException;
 
-    class NoRouteDefiniedException extends PfException {
+    class NoRouteDefinedException extends PfException {
 
     }

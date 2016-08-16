@@ -38,7 +38,7 @@
         }
 
 
-        public function __invoke($params)
+        public function __invoke($params = [])
         {
             if ($this->inputFilter !== null) {
                 $ret = $this->inputFilter->each(function ($fn) use (&$params) {
@@ -60,9 +60,12 @@
                 return $params;
 
             $ret = null;
+            $params["§§parameters"] = $params;
+            $callParams["§§data"] = $params;
             if ($this->call !== null) {
                 $ret = $this->mDi->__invoke($this->call, $params);
             }
+
 
             if ($this->outputFilter !== null) {
                 $postRet = $this->outputFilter->each(function ($fn) use (&$ret, $params) {

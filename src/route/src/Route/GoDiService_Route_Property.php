@@ -12,7 +12,7 @@
 
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
-    use Gismo\Component\Route\Ex\NoRouteDefiniedException;
+    use Gismo\Component\Route\Ex\NoRouteDefinedException;
     use Gismo\Component\Route\Node\GoRouteNode;
     use Gismo\Component\Route\Route\GoRoute;
     use Gismo\Component\Route\Route\GoRouteContainer;
@@ -62,9 +62,10 @@
 
 
         public function dispatch (RouterRequest $request) {
+
             $action = $this->container->findBestAction($request);
             if ($action === null)
-                throw new NoRouteDefiniedException(["No route defined for ?", $request]);
+                throw new NoRouteDefinedException(["No route defined for ?", (string)$request]);
             $action->dispatch($request);
         }
 

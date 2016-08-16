@@ -36,6 +36,7 @@
             "Gismo\\Component\\Route\\": "src/route/src/Route",
             "Gismo\\Component\\Logging\\": "src/logging/src/Logging",
             "Gismo\\Component\\Template\\": "src/template/src/Template",
+            "Gismo\\Component\\Api\\": "src/api/src/Api",
 
             "Gismo\\Component\\Annotation\\": "src/annotation/src/Annotation"
         },
