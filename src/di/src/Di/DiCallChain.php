@@ -9,9 +9,10 @@
 
     namespace Gismo\Component\Di;
 
+    use Gismo\Component\Di\Core\Invokeable;
     use Gismo\Component\PhpFoundation\Type\OrderedList;
 
-    class DiCallChain implements \ArrayAccess {
+    class DiCallChain implements \ArrayAccess, Invokeable {
 
         /**
          * @var DiContainer

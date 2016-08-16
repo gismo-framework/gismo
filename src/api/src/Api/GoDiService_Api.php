@@ -19,7 +19,7 @@
     trait GoDiService_Api {
 
         private function __di_init_service_api() {
-            $this["api.__PROTO__"] = $this->factory(function () {
+            $this["api.__PROTO__"] = $this->service(function () {
                 return new DiCallChain($this);
             });
         }

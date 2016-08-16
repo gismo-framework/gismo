@@ -12,6 +12,7 @@
 
 
 
+    use Gismo\Component\Di\Core\Invokeable;
     use Gismo\Component\Di\Type\DiClosureFactory;
     use Gismo\Component\Di\Type\DiFactory;
     use Gismo\Component\Di\Type\DiInterceptor;
@@ -115,6 +116,9 @@
          * @return mixed
          */
         public function __invoke(callable $fn, array $params = []) {
+            if ($fn instanceof Invokeable) {
+                return $fn($params);
+            }
             $paramBuilder = new GoDiParameterBuilder($this);
             foreach ($params as $key => $val) {
                 $paramBuilder->override($key, $val);

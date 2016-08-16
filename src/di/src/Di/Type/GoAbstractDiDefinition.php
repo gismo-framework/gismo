@@ -8,6 +8,7 @@
 
     namespace Gismo\Component\Di\Type;
 
+    use Gismo\Component\Di\Core\Invokeable;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\PhpFoundation\Accessor\CallableAccessor;
     use Gismo\Component\PhpFoundation\Type\OrderedList;
@@ -78,6 +79,8 @@
         protected $returnClassName = null;
 
         protected function _autodetectReturnType(callable $factory) {
+            if ($factory instanceof Invokeable)
+                return;
             $reflection = (new CallableAccessor($factory))->getReflection();
             $returnType = $reflection->getReturnType();
             if ($returnType !== null) {
