@@ -78,7 +78,7 @@
 
             $routeBindName = $this->getBindName($myClassName, $myMethodName);
             $context[$routeBindName] = $context->service(function () use ($context, $bindActionOrApi) {
-                $call = new DiCallChain($context);
+                $call = new DiCallChain($context); // Durch Route ersetzen
                 $call[0] = function ($§§parameters) use ($bindActionOrApi, $context) {
                     return $context[$bindActionOrApi]($§§parameters);
                 };
