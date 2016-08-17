@@ -41,9 +41,30 @@
             $this->caseSens = $caseSens;
         }
 
-        public function getValue() : array {
-            return $this->container;
+        /**
+         * Return the complex element from here.
+         *
+         * Returns NULL if the element was not found.
+         *
+         * @return array|mixed|null
+         */
+        public function getValue() {
+            $found = TRUE;
+            $curElem =& $this->container;
+            foreach ($this->path as $curOffset) {
+                if ( ! isset( $curElem[$curOffset] )) {
+                    $found = FALSE;
+                    break;
+                }
+                $curElem =& $curElem[$curOffset];
+            }
+            if ($found === false)
+                return null;
+            return $curElem;
         }
+
+
+
 
         /**
          * Whether a offset exists
@@ -106,6 +127,8 @@
             if ( ! $this->caseSens) {
                 $offset = strtoupper($offset);
             }
+
+            // @ TODO : Copy Paste Entsorgen!!! (siehe getValue())
             $curElem =& $this->container;
             foreach ($this->path as $curOffset) {
                 if ( ! isset( $curElem[$curOffset] )) {

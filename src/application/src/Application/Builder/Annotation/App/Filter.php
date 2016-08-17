@@ -7,12 +7,13 @@
      */
 
 
-    namespace Gismo\Component\Route\Annotation;
+    namespace Gismo\Component\Application\Builder\Annotation\App;
     use Doctrine\Common\Annotations\Annotation\Attribute;
     use Doctrine\Common\Annotations\Annotation\Attributes;
     use Doctrine\Common\Annotations\Annotation\Enum;
     use Doctrine\Common\Annotations\Annotation\Required;
     use Doctrine\Common\Annotations\Annotation\Target;
+    use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Route\GoDiService_Route_Property;
 
@@ -23,31 +24,24 @@
      * @Annotation
      * @Target("METHOD")
      */
-    class Route implements GoRouteAnnotation {
+    class Filter implements GoApplicationMethodAnnotation{
 
         /**
-         *
+         * @Required()
          * @var string
          */
-        public $route;
+        public $target;
 
         /**
-         * @Enum("POST", "GET", "PUT", "DELETE", "*")
+         * @var int
          */
-        public $method = "*";
-
-        /**
-         * @var string
-         */
-        public $bind;
+        public $priority = 0;
 
 
-        public function registerClass($object, GoDiService_Route_Property $route, Context $context, &$classScope) {
-            throw new \InvalidArgumentException("Cannot use @Route on class");
-        }
-
-        public function registerMethod($object, $methodName, GoDiService_Route_Property $route, Context $context, &$classScope) {
-            // TODO: Implement registerMethod() method.
+        public function registerClass($myClassName, $myMethodName, Context $context, array &$builderScope) {
+            $context[$this->target] = $context->filter(function ($§§input) use ($myClassName, $myMethodName, $context) {
+                return $context([$context[$myClassName], $myMethodName], ["§§input"=>$§§input]);
+            }, $this->priority);
         }
     }
 

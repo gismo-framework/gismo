@@ -7,36 +7,21 @@
      */
 
 
-    namespace Gismo\Component\Route\Annotation;
+    namespace Gismo\Component\Application\Builder\Annotation\App;
     use Doctrine\Common\Annotations\Annotation\Attribute;
     use Doctrine\Common\Annotations\Annotation\Attributes;
     use Doctrine\Common\Annotations\Annotation\Enum;
     use Doctrine\Common\Annotations\Annotation\Required;
     use Doctrine\Common\Annotations\Annotation\Target;
-    use Gismo\Component\Application\Context;
-    use Gismo\Component\Route\GoDiService_Route_Property;
 
     /**
      * Class Route
      * @package Gismo\Component\Route\Annotations
      *
      * @Annotation
-     * @Target("METHOD")
+     * @Target("METHOD|CLASS")
      */
-    class Filter {
-
-        /**
-         * @Required()
-         * @var string
-         */
-        public $target;
-
-        /**
-         * @var int
-         */
-        public $priority = 0;
-
-
+    class AllowAll {
 
 
     }

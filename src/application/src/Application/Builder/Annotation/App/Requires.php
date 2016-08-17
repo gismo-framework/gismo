@@ -7,7 +7,7 @@
      */
 
 
-    namespace Gismo\Component\Api\Annotation;
+    namespace Gismo\Component\Application\Builder\Annotation\App;
     use Doctrine\Common\Annotations\Annotation\Attribute;
     use Doctrine\Common\Annotations\Annotation\Attributes;
     use Doctrine\Common\Annotations\Annotation\Enum;
@@ -21,8 +21,32 @@
      * @Annotation
      * @Target("METHOD|CLASS")
      */
-    class AllowAll {
+    class Requires {
 
+        /**
+         *
+         * @var string
+         */
+        public $role;
+
+        /**
+         *
+         *
+         * @var array<string>
+         */
+        public $permission;
+
+        /**
+         * Classname of a method used to check Access
+         *
+         * @var string
+         */
+        public $checker;
+
+        /**
+         * @Enum("RESTRICT", "ALLOW")
+         */
+        public $default = "RESTRICT";
 
     }
 

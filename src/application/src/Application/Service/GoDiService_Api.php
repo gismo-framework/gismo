@@ -6,7 +6,7 @@
      * Time: 18:12
      */
 
-    namespace Gismo\Component\Api;
+    namespace Gismo\Component\Application\Service;
     use Gismo\Component\Di\DiCallChain;
 
 
@@ -14,7 +14,6 @@
      * Class GoDiService_Api
      * @package Gismo\Component\Api
      *
-     * @property GoApiContainer $api
      */
     trait GoDiService_Api {
 

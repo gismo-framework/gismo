@@ -3,11 +3,10 @@
      * Created by PhpStorm.
      * User: matthes
      * Date: 12.08.16
-     * Time: 01:32
+     * Time: 01:44
      */
 
-
-    namespace Gismo\Component\Api\Annotation;
+    namespace Gismo\Component\Application\Builder\Annotation\App;
     use Doctrine\Common\Annotations\Annotation\Attribute;
     use Doctrine\Common\Annotations\Annotation\Attributes;
     use Doctrine\Common\Annotations\Annotation\Required;
@@ -18,17 +17,16 @@
      * @package Gismo\Component\Route\Annotations
      *
      * @Annotation
-     * @Target("METHOD")
+     * @Target("CLASS")
      */
-    class Api {
+    class Mount {
 
         /**
-         * Default: auto
-         *
+         * @Required()
          * @var string
          */
-        public $bind;
+        public $mount;
+
+
 
     }
-
-

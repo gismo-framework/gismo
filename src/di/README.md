@@ -172,6 +172,15 @@ $c = new DiCallChain($di, false); // <= Filter only mode (for Events)
 In FilterOnlyMode there cannot be registered any MainAction nor any
 Filters with priority below 1.
 
+
+### Calling Constructor of a Class
+
+To build the parameters for the Constructor of a class call `construct()`:
+
+```php
+$obj = $di->construct(SomeClass::class, ["Some"=>"params"]);
+```
+
 ### Registering the Main Action
 
 ```php

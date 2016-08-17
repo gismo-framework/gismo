@@ -6,9 +6,11 @@
  * Time: 00:45
  */
 
-    namespace Gismo\Component\Partial;
+    namespace Gismo\Component\Application\Service;
 
 
+    use Gismo\Component\Partial\Page;
+    use Gismo\Component\Partial\Partial;
     use Gismo\Component\Template\GoTemplate;
 
     trait GoDiService_Partial {

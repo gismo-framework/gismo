@@ -26,16 +26,20 @@
                 $obj = new $annotationPackClassName();
                 if ( ! $obj instanceof GoAnnotationPack)
                     throw new \InvalidArgumentException("Parameter one must be classname of GoAnnotionPack found '$annotationPackClassName'");
-                foreach ($obj->getAnnotationClassNames() as $className)
-                    AnnotationRegistry::loadAnnotationClass($className);
+                foreach ($obj->getAnnotationClassNames() as $className) {
+                    $ref = new \ReflectionClass($className);
+                    AnnotationRegistry::registerFile($ref->getFileName());
+                }
                 self::$loadedPacks[$annotationPackClassName] = true;
             }
         }
 
 
         private static function _loadReader() {
-            if (self::$sReader === null)
+            if (self::$sReader === null) {
                 self::$sReader = new AnnotationReader();
+
+            }
         }
 
         /**
@@ -61,8 +65,8 @@
             $ref = new \ReflectionMethod($classname, $method);
 
             if ($annotationName === null)
-                return self::$sReader->getClassAnnotations($ref);
-            return self::$sReader->getClassAnnotation($ref, $annotationName);
+                return self::$sReader->getMethodAnnotations($ref);
+            return self::$sReader->getMethodAnnotation($ref, $annotationName);
         }
 
         /**

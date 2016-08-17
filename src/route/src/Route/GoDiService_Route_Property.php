@@ -49,7 +49,7 @@
         }
         
         
-        public function add($route, callable $cb) : GoAction {
+        public function add($route, callable $cb, $bind=null) : GoAction {
             $route = $this->mountedRoutePrefix . $route;
             $routeObj = new GoRoute($route);
 

@@ -15,8 +15,9 @@
         private $filter = null;
         private $priority = 0;
 
-        public function __construct(callable $filter) {
+        public function __construct(callable $filter, $priority=0) {
             $this->filter = $filter;
+            $this->priority = $priority;
         }
 
 

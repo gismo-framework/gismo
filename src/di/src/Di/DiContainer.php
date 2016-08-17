@@ -112,8 +112,8 @@
          * @param callable $fn
          * @return GoFilterDefinition
          */
-        public function filter(callable $fn) : GoFilterDefinition {
-            return new GoFilterDefinition($fn);
+        public function filter(callable $fn, $priority=0) : GoFilterDefinition {
+            return new GoFilterDefinition($fn, $priority);
         }
 
 
@@ -138,6 +138,29 @@
             $paramValues = $paramBuilder->build($ref->getParameters());
             return $fn(...$paramValues);
         }
+
+        /**
+         * Create a new Instance of a class calling the Constructor.
+         *
+         * @param $className
+         * @param array $params
+         * @return mixed
+         */
+        public function construct ($className, array $params = []) {
+            $paramBuilder = new GoDiParameterBuilder($this);
+            foreach ($params as $key => $val) {
+                $paramBuilder->override($key, $val);
+            }
+            $ref = new \ReflectionClass($className);
+            if ($ref->getConstructor() === null) {
+                return new $className();
+            }
+            $ref->getConstructor()->getParameters();
+
+            $paramValues = $paramBuilder->build($ref->getConstructor()->getParameters());
+            return new $className(...$paramValues);
+        }
+
 
 
         private function getFactoryKeyForSettaGetta($varName) {
