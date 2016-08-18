@@ -9,7 +9,9 @@
     namespace Gismo\Component\HttpFoundation\Request;
 
     use Doctrine\Instantiator\Exception\InvalidArgumentException;
+    use Gismo\Component\Config\AppConfig;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\PhpFoundation\Accessor\IpAccessor;
 
     class RequestFactory {
 
@@ -27,7 +29,7 @@
             return new Request($data);
         }
 
-        public static function BuildFromEnv($server=null) : Request {
+        public static function BuildFromEnv(AppConfig $config, $server=null) : Request {
             if ($server === null)
                 $server = $_SERVER;
 
@@ -47,7 +49,6 @@
             $data["FILES"] = $_FILES;
             $data["COOKIES"] = $_COOKIE;
 
-            $data["REMOTE_IP"] = $server["REMOTE_ADDR"];
 
 
             $headers = [];
@@ -58,6 +59,12 @@
             }
             $data["HEADERS"] = $headers;
 
+            $data["REMOTE_IP"] = $server["REMOTE_ADDR"];
+            if ((new IpAccessor($server["REMOTE_ADDR"]))->isInSubnet($config->secureProxyNet)) {
+                if ( ! isset ($data["HEADERS"][$config->secureForwardIpHeader]))
+                    throw new \InvalidArgumentException("Forwarded IpHeader (Config: 'secureForwardIpHeader') is missing. Edit your nginx config.");
+                $data["REMOTE_IP"] = $data["HEADERS"][$config->secureForwardIpHeader];
+            }
 
             $scriptPath = dirname($server["SCRIPT_NAME"]);
             $data["ROUTE_START_URL"] = $requestHostAndScheme . $scriptPath;

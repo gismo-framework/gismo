@@ -30,6 +30,8 @@
      * @property UrlAccessor $ROUTE_START_URL
      * @property PathAccessor $ROUTE_PATH
      * @property StringAccessor $METHOD
+     * @property boolean $IS_FROM_INTERNAL_NETWORK
+     * @property boolean $IS_FROM_SECURE_NETWORK
      */
     class Request {
 
