@@ -22,6 +22,13 @@
          }
 
 
+         public function __debugInfo() {
+             $ret = parent::__debugInfo();
+             $ret["value"] = $this->value;
+             return $ret;
+         }
+
+
          public function __diGetInstance(DiContainer $di, array $params) {
              $val = $this->value;
              $val = $this->_applyFilters($val, $di);

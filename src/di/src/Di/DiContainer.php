@@ -77,6 +77,13 @@
             return new GoServiceDiDefinition($fn);
         }
 
+
+
+        public function __debug_getDiDef() : PrototypeMap {
+            return $this->diDef;
+        }
+
+
         /**
          * A Factory is called each time the Object is
          * requested.

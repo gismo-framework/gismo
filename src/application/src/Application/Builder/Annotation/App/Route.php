@@ -29,7 +29,10 @@
     class Route implements GoApplicationMethodAnnotation {
 
         /**
+         * 
          *
+         * Placeholder:
+         * '@@' : For Api-Routes only - the default api route without parameters
          *
          * @var string
          */
@@ -59,6 +62,8 @@
         public function registerClass($myClassName, $myMethodName, Context $context, array &$builderScope) {
             $bindActionOrApi = null;
             $route = $this->route;
+            $apiDefaultRoute = null;
+
             $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Action::class);
             if ($anno instanceof Action) {
                 $bindActionOrApi = $anno->getBindName($myClassName, $myMethodName);
@@ -66,9 +71,15 @@
             $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Api::class);
             if ($anno instanceof Api) {
                 $bindActionOrApi = $anno->getBindName($myClassName, $myMethodName);
-                if ($route === null)
-                    $route = $anno->getDefaultRoute($myClassName, $myMethodName);
+                $apiDefaultRoute = $anno->getDefaultRoute($myClassName, $myMethodName);
             }
+
+            if (is_string($route)) {
+                $route = str_replace("@@", $apiDefaultRoute, $route);
+            }
+
+            if ($route === null && $apiDefaultRoute !== null)
+                $route = $apiDefaultRoute;
 
             if ($bindActionOrApi === null) {
                 throw new \InvalidArgumentException("Can't add route for $myClassName::$myMethodName: Define at least @Action or @Api");

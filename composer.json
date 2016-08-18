@@ -38,6 +38,7 @@
             "Gismo\\Component\\Logging\\": "src/logging/src/Logging",
             "Html5\\Template\\": "src/template/src/Template",
             "Gismo\\Component\\Api\\": "src/api/src/Api",
+            "Gismo\\Component\\ApplicationDevTools\\": "src/applicationDevTools/src/ApplicationDevTools",
 
             "Gismo\\Component\\Annotation\\": "src/annotation/src/Annotation"
         },

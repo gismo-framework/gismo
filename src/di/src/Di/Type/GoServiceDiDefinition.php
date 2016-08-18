@@ -15,6 +15,12 @@
 
         
 
+        public function __debugInfo() {
+            $ret = parent::__debugInfo();
+            $ret["factory"] = $this->factory;
+            return $ret;
+        }
+
 
         public function __construct(callable $factory) {
             $this->factory = $factory;
