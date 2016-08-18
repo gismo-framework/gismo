@@ -32,10 +32,12 @@
                 return $p;
             });
 
+            /**
             $this[GoTemplate::class] = $this->service(function () {
                 $template = new GoTemplate();
                 return $template;
             });
+             */
         }
 
 

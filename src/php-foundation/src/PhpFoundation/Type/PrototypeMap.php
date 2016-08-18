@@ -32,7 +32,13 @@
                 if ($key != "prototype" && $key != "mapData")
                     $data[$key] = $value;
             }
+
             return $data;
+        }
+
+
+        public function getDefinedKeys() : array {
+            return array_keys($this->mapData);
         }
 
         public function __construct($prototype) {

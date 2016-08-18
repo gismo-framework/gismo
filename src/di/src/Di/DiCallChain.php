@@ -39,6 +39,15 @@
         }
 
 
+        public function __debugInfo() {
+            return [
+                    "inputFilter" => $this->inputFilter,
+                "call" => $this->call,
+                "outputFilter" => $this->outputFilter
+            ];
+        }
+
+
         public function __invoke($params = [])
         {
             if ($this->inputFilter !== null) {

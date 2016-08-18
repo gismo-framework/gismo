@@ -19,6 +19,8 @@
         private $isProtected = false;
 
 
+
+
         /**
          * Protect the instance against overwriting
          *
@@ -39,6 +41,15 @@
          * @var OrderedList|null
          */
         protected $filters = null;
+
+
+        public function __debugInfo() {
+            return [
+                    "isProtected" => $this->isProtected,
+                "filters" => $this->filters
+            ];
+        }
+
 
         public function addFilter(callable $filter, $priority=0) : self {
             if ($this->filters === null) {

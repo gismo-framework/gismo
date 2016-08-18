@@ -43,6 +43,17 @@
         }
 
 
+        public function __debugInfo() {
+            $ret = [];
+            $this->each (function ($what, $prio) use (&$ret) {
+                while (isset ($ret["$prio"])) {
+                    $prio .= "+";
+                }
+                $ret[$prio] = $what;
+            });
+            return $ret;
+        }
+
         /**
          * <example>
          *  $c->each(function ($what, $prio, $alias) {

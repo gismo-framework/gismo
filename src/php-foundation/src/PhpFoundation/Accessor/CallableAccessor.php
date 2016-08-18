@@ -22,6 +22,11 @@
 
         public function __construct(callable $callable) {
             $this->callable = $callable;
+            if (is_object($callable) && ! $this->callable instanceof \Closure) {
+                $oRef = new \ReflectionObject($callable);
+                $this->reflection = $oRef->getMethod("__invoke");
+                return;
+            }
             if (is_array($callable)) {
                 if (is_object($callable[0])) {
                     $oRef = new \ReflectionObject($callable[0]);
@@ -76,6 +81,11 @@
 
         public function __toString()
         {
+            if (is_object($this->callable) && ! $this->callable instanceof \Closure) {
+                $oRef = new \ReflectionObject($this->callable);
+                $this->reflection = $oRef->getMethod("__invoke");
+                return "{$oRef->getName()}::__invoke()";
+            }
             if (is_array($this->callable)) {
                 if (is_object($this->callable[0])) {
                     $oRef = new \ReflectionObject($this->callable[0]);
