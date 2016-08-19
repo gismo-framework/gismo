@@ -10,7 +10,7 @@
 
 
     use Gismo\Component\HttpFoundation\Request\Request;
-    use Gismo\Component\Route\Route\GoRoute;
+    use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Type\RouterRequest;
 
     class GoRouteTest extends \PHPUnit_Framework_TestCase {
@@ -18,7 +18,7 @@
 
 
         public function testBuildParams () {
-            $route = new GoRoute("/static/:name1/:name2/::name3");
+            $route = new GoRouteDefinition("/static/:name1/:name2/::name3");
 
             self::assertEquals(
                     ["name1" => "val1", "name2" => "val2", "name3" => ["val3", "val4"]],

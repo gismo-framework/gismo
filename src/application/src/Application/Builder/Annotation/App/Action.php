@@ -8,7 +8,9 @@
 
     namespace Gismo\Component\Application\Builder\Annotation\App;
     use Doctrine\Common\Annotations\Annotation\Target;
+    use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
+    use Gismo\Component\Application\Container\GoAction;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Di\Core\DiCallStack;
     use Gismo\Component\Di\DiCallChain;
@@ -43,10 +45,20 @@
                 });
             }
 
+            // Search for a Associated Route
+            $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Route::class);
+            $routeBindName = null;
+            if ($anno instanceof Action) {
+                $routeBindName = $anno->getBindName($myClassName, $myMethodName);
+            }
 
             // Register the Action
-            $context[$this->getBindName($myClassName, $myMethodName)] = $context->service(function () use ($context, $myClassName, $myMethodName) {
-                $stack = new DiCallChain($context);
+            $context[$this->getBindName($myClassName, $myMethodName)] = $context->service(function () use ($context, $myClassName, $myMethodName, $routeBindName) {
+                $stack = new GoAction($context);
+
+                // Enable calling link() and linkAbs() on Api
+                $stack->__setAssociatedRouteBindName($routeBindName);
+
                 // Connect Main Action to class and Method
                 $stack[0] = [$context[$myClassName], $myMethodName];
                 return $stack;

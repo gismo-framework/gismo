@@ -12,7 +12,7 @@
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\PhpFoundation\Helper\StopWatch;
     use Gismo\Component\Route\GoAction;
-    use Gismo\Component\Route\Route\GoRoute;
+    use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Route\GoRouteComponent;
     use Gismo\Component\Route\Route\GoRouteContainer;
     use Gismo\Component\Route\Type\RouterRequest;
@@ -23,7 +23,7 @@
 
 
         public function addRoute(string $routeName, GoRouteContainer $container) {
-            $route = new GoRoute($routeName);
+            $route = new GoRouteDefinition($routeName);
             $container->add($route, (new GoAction(new DiContainer(), $route))->bind($routeName));
         }
 

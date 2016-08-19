@@ -11,7 +11,7 @@
 
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\Route\GoAction;
-    use Gismo\Component\Route\Route\GoRoute;
+    use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Type\RouterRequest;
 
     class GoActionTest extends \PHPUnit_Framework_TestCase {
@@ -19,7 +19,7 @@
 
         public function testMainActionExecutes () {
             $di = new DiContainer();
-            $action = new GoAction($di, new GoRoute("/some/request"));
+            $action = new GoAction($di, new GoRouteDefinition("/some/request"));
 
             $cb = $this->getMock(\stdClass::class, ["onAction"]);
             $cb->expects($this->once())

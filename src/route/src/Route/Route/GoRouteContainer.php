@@ -19,7 +19,7 @@
         private $methodContainers = [];
 
 
-        private function _registerSingleRoute (GoRouteNode $node, GoRoute $route, GoAction $action) {
+        private function _registerSingleRoute (GoRouteNode $node, GoRouteDefinition $route, GoAction $action) {
             $curNode = $node;
             foreach ($route->getComponents() as $curComponent) {
                 if ($curComponent->getType() === GoRouteComponent::TYPE_STATIC) {
@@ -42,7 +42,7 @@
         }
 
 
-        public function add(GoRoute $route, GoAction $action) {
+        public function add(GoRouteDefinition $route, GoAction $action) {
             foreach ($route->getMethods() as $curMethod) {
                 if ( ! isset ($this->validMethods[$curMethod]))
                     throw new \InvalidArgumentException("Invalid Method '$curMethod' in route '$route'");

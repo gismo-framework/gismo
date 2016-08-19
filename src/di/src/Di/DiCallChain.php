@@ -17,7 +17,7 @@
         /**
          * @var DiContainer
          */
-        private $mDi;
+        protected $mDi;
 
         private $filterOnly;
 

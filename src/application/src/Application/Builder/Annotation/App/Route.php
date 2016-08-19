@@ -15,6 +15,7 @@
     use Doctrine\Common\Annotations\Annotation\Target;
     use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
+    use Gismo\Component\Application\Container\GoRoute;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Di\DiCallChain;
     use Gismo\Component\Route\GoDiService_Route_Property;
@@ -88,8 +89,10 @@
                 throw new \InvalidArgumentException("Can't add empty route for $myClassName::$myMethodName()");
 
             $routeBindName = $this->getBindName($myClassName, $myMethodName);
-            $context[$routeBindName] = $context->service(function () use ($context, $bindActionOrApi) {
-                $call = new DiCallChain($context); // Durch Route ersetzen
+            $context[$routeBindName] = $context->service(function () use ($context, $bindActionOrApi, $route, $routeBindName) {
+                $call = new GoRoute($context); // Durch Route ersetzen
+                $call->origRoute = $route; // Wichtig für link() und linkAbs()
+                $call->bindName = $routeBindName;
                 $call[0] = function ($§§parameters) use ($bindActionOrApi, $context) {
                     return $context[$bindActionOrApi]($§§parameters);
                 };

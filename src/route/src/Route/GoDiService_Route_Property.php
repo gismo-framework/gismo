@@ -14,7 +14,7 @@
     use Gismo\Component\HttpFoundation\Request\Request;
     use Gismo\Component\Route\Ex\NoRouteDefinedException;
     use Gismo\Component\Route\Node\GoRouteNode;
-    use Gismo\Component\Route\Route\GoRoute;
+    use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Route\GoRouteContainer;
     use Gismo\Component\Route\Type\RouterRequest;
 
@@ -51,7 +51,7 @@
         
         public function add($route, callable $cb, $bind=null) : GoAction {
             $route = $this->mountedRoutePrefix . $route;
-            $routeObj = new GoRoute($route);
+            $routeObj = new GoRouteDefinition($route);
 
             $action = new GoAction($this->di, $routeObj);
             $action[0] = $cb;

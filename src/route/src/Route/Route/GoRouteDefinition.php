@@ -10,19 +10,20 @@
 
     use Gismo\Component\Route\Type\RouterRequest;
 
-    class GoRoute {
+    class GoRouteDefinition {
 
         /**
          * @var GoRouteComponent[]
          */
         private $components = [];
         private $methods = ["*"];
+        private $validMethods = ["GET" => true, "POST" => true, "PUT" => true, "DELETE" => true, "*" => true];
 
-        public function __construct(string $route) {
-            if (strpos($route, "@") !== false) {
-                list($methods, $route) = explode("@", $route);
-                $this->methods = explode("|", $methods);
-            }
+        public function __construct(string $route, array $methods=["*"]) {
+            foreach ($methods as $method)
+                if ( ! isset ($this->validMethods[$method]))
+                    throw new \InvalidArgumentException("Invalid route method: '$method'. Valid are :" . implode(",", array_keys($this->validMethods)));
+            $this->methods = $methods;
 
             if ($route === "/")
                 $route = "";
@@ -67,6 +68,35 @@
                 }
             }
             return $params;
+        }
+
+
+        public function buildLink (array $params) {
+            $parts = [];
+            foreach ($this->components as $curComponent) {
+                if ($curComponent->getType() === GoRouteComponent::TYPE_STATIC) {
+                    $parts[] = $curComponent->getStaticName();
+                    continue;
+                }
+                if ($curComponent->getType() === GoRouteComponent::TYPE_PARAM) {
+                    if ( ! isset ($params[$curComponent->getParamName()])) {
+                        $parts[] = "";
+                        continue;
+                    }
+                    $parts[] = urlencode(urlencode($params[$curComponent->getParamName()]));
+                    continue;
+                }
+                if ($curComponent->getType() === GoRouteComponent::TYPE_ARRAY_PARAM) {
+                    if ( ! isset ($params[$curComponent->getParamName()])) {
+                        continue;
+                    }
+                    foreach ($params[$curComponent->getParamName()] as $curParam) {
+                        $parts[] = urlencode(urlencode($params[$curComponent->getParamName()]));
+                    }
+                    continue;
+                }
+            }
+            return "/" . implode("/", $parts);
         }
 
         /**

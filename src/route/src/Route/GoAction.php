@@ -13,7 +13,7 @@
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
     use Gismo\Component\PhpFoundation\Type\ArrayAccessOrderedList;
-    use Gismo\Component\Route\Route\GoRoute;
+    use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Type\RouterRequest;
 
     /**
@@ -28,14 +28,14 @@
 
 
         /**
-         * @var GoRoute|null
+         * @var GoRouteDefinition|null
          */
         private $mRoute;
 
 
 
 
-        public function __construct(DiContainer $di, GoRoute $route=null) {
+        public function __construct(DiContainer $di, GoRouteDefinition $route=null) {
             parent::__construct($di);
             $this->mRoute = $route;
         }
