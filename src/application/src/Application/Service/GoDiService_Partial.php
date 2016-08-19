@@ -9,42 +9,35 @@
     namespace Gismo\Component\Application\Service;
 
 
+    use Gismo\Component\Application\Container\GoTemplate;
     use Gismo\Component\Partial\Page;
     use Gismo\Component\Partial\Partial;
-    use Gismo\Component\Template\GoTemplate;
+    use Html5\Template\HtmlTemplate;
+
 
     trait GoDiService_Partial {
 
         private function __di_init_service_partial() {
-            $this["partial.__PROTO__"] = $this->service(function ($§§name) {
-                $p = new Partial($this);
-                $p[0] = function () use ($§§name) {
-                    return "No Template defined: $§§name";
-                };
+            $this[HtmlTemplate::class] = $this->service(function () {
+                $p = new HtmlTemplate();
                 return $p;
             });
 
-            $this["page.__PROTO__"] = $this->service(function ($§§name) {
-                $p = new Page($this);
-                $p[0] = function () use ($§§name) {
-                    return "No Template defined: $§§name";
-                };
-                return $p;
+
+            $this->route->add("/assets/::path", function (array $path) {
+                $forTemplate = array_shift($path);
+                $tpl = $this[$forTemplate];
+                /* @var $tpl GoTemplate */
+                echo $tpl->getAsset($path);
             });
 
-            /**
-            $this[GoTemplate::class] = $this->service(function () {
-                $template = new GoTemplate();
-                return $template;
-            });
-             */
         }
 
 
-        public function templateFile($filename) {
-            return function ($§§parameters, GoTemplate $template) use ($filename) {
-                return $template->renderHtmlFile($filename, $§§parameters);
-            };
+        public function template($filename, $bindName) {
+            return $this->service(function () use ($filename, $bindName) {
+                return new GoTemplate($this, $filename, $bindName);
+            });
         }
 
 
