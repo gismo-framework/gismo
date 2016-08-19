@@ -16,6 +16,7 @@
     use Gismo\Component\Application\Builder\Annotation\App\Action;
     use Gismo\Component\Application\Builder\Annotation\App\AllowAll;
     use Gismo\Component\Application\Builder\Annotation\App\Api;
+    use Gismo\Component\Application\Builder\Annotation\App\ContextInit;
     use Gismo\Component\Application\Builder\Annotation\App\Filter;
     use Gismo\Component\Application\Builder\Annotation\App\Mount;
     use Gismo\Component\Application\Builder\Annotation\App\Parameter;
@@ -40,7 +41,8 @@
                 Mount::class,
                 Parameter::class,
                 Requires::class,
-                Route::class
+                Route::class,
+                ContextInit::class
             ];
         }
     }

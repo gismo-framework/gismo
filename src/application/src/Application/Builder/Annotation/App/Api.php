@@ -54,11 +54,7 @@
 
         public function registerClass($myClassName, $myMethodName, Context $context, array &$builderScope) {
             // Make the Class Available
-            if ( ! isset ($context[$myClassName])) {
-                $context[$myClassName] = $context->service(function () use ($myClassName, $context) {
-                    return $context->construct($myClassName);
-                });
-            }
+
 
             // Search for a Associated Route
             $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Route::class);

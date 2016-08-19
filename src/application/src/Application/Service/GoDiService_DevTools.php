@@ -23,20 +23,23 @@
         private function __di_init_service_devtools() {
             $sw = new StopWatch();
 
-            $this->route->add("/devTools/status", function (Context $context) use ($sw) {
+            $this->route->add("/dev/status", function (Context $context) use ($sw) {
                 $timing = [];
                 $timing["[Time to routing call]"] = number_format($sw->lap(), 4);
                 $varVisualizer = new GoVarVisualizer();
-                $varVisualizer->outputVisualisation($context->__debug_getDiDef(), "Pre Run Environment (filter-only)");
 
+                $vals = $context->__debug_getDiDef();
+                $varVisualizer->outputVisualisation($vals, "Pre Run Environment (filter-only)");
+
+                $timing["[Time to finish prepare stage]"] = number_format($sw->lap(), 4);
 
                 $con = [];
-                $timing["[Time to finish prepare stage]"] = number_format($sw->lap(), 4);
                 $conSw = new StopWatch();
                 foreach ($context->__debug_getDiDef()->getDefinedKeys() as $name) {
                     $con[$name] = $context[$name];
                     $timing[$name] = number_format($conSw->lap(), 4);
                 }
+                ksort($con);
                 $varVisualizer->outputVisualisation($con, "Run Environment");
 
                 $timing["[Time total]"] = number_format($sw->total(), 4);

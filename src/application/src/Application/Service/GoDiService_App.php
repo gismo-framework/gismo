@@ -34,6 +34,15 @@
          */
         public function provideClass(string $classname) : self {
             GoAnnotations::Require(GoAnnotationPack_Application::class);
+
+            if (isset ($this[$classname]))
+                throw new \InvalidArgumentException("Class '$classname' already provided!");
+
+            // Provide the Class as Service
+            $this[$classname] = $this->service(function () use ($classname) {
+                return $this->construct($classname);
+            });
+
             $ref = new \ReflectionClass($classname);
             $annotations = GoAnnotations::ForClass($classname);
             $builderScope = [];

@@ -11,6 +11,8 @@
     use Doctrine\Common\Annotations\Annotation\Attributes;
     use Doctrine\Common\Annotations\Annotation\Required;
     use Doctrine\Common\Annotations\Annotation\Target;
+    use Gismo\Component\Application\Builder\GoApplicationClassAnnotation;
+    use Gismo\Component\Application\Context;
 
     /**
      * Class Route
@@ -19,14 +21,24 @@
      * @Annotation
      * @Target("CLASS")
      */
-    class Mount {
+    class Mount implements GoApplicationClassAnnotation {
 
         /**
-         * @Required()
          * @var string
          */
-        public $mount;
+        public $route;
+
+        /**
+         * @var string
+         */
+        public $api;
 
 
-
+        public function registerClass($myClassName, Context $context, array &$builderScope)
+        {
+            $builderScope["mount_{$myClassName}"] = [
+                "route" => $this->route,
+                "api"   => $this->api
+            ];
+        }
     }
