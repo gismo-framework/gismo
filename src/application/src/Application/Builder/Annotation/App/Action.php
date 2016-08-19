@@ -48,7 +48,7 @@
             // Search for a Associated Route
             $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Route::class);
             $routeBindName = null;
-            if ($anno instanceof Action) {
+            if ($anno instanceof Route) {
                 $routeBindName = $anno->getBindName($myClassName, $myMethodName);
             }
 

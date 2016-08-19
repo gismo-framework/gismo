@@ -16,7 +16,7 @@
          */
         private $mAssociatedRoute = null;
 
-        public function __setAssociatedRouteBindName(string $bindName) {
+        public function __setAssociatedRouteBindName(string $bindName = null) {
             $this->mAssociatedRoute = $bindName;
         }
 

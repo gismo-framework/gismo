@@ -71,7 +71,7 @@
         }
 
 
-        public function buildLink (array $params) {
+        public function buildLink (array $params) : string {
             $parts = [];
             foreach ($this->components as $curComponent) {
                 if ($curComponent->getType() === GoRouteComponent::TYPE_STATIC) {

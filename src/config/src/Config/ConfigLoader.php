@@ -21,7 +21,7 @@
         }
 
 
-        public static function FromFile($filename, $env, AppConfig $config) : self {
+        public static function FromFile($filename, string $env, AppConfig $config) : bool {
             $data = parse_ini_file($filename, true);
             $guessedEnvironment = $env;
 
@@ -29,13 +29,15 @@
                 throw new \InvalidArgumentException("Section '$guessedEnvironment' missing in config file '$filename'. (Section '[$guessedEnvironment]' missing)");
             $realData = $data[$guessedEnvironment];
 
+            $config->ENVIRONMENT = $env;
+
             foreach ($config as $key => $defaultValue) {
                 if (substr($key, 0, 2) == "__")
                     continue;
                 if (!isset ($realData[$key])) {
                     if (!empty($defaultValue))
                         continue;
-                    throw new \InvalidArgumentException("Section [$guessedEnvironment] is missing configuration-directive '$key' in config file '$filename'");
+                    throw new \InvalidArgumentException("Section [$guessedEnvironment]: Missing configuration-directive '$key' in config file '$filename'");
                 }
                 $value = $realData[$key];
                 if (is_string($value)) {

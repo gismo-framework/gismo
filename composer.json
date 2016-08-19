@@ -18,7 +18,8 @@
         "firephp/firephp-core": "*",
         "doctrine/annotations": "*",
         "html5/htmlreader": "*",
-        "html5/template": "*"
+        "html5/template": "*",
+        "html5/fhtml": "*"
     },
     "autoload": {
         "psr-4": {
@@ -38,6 +39,7 @@
             "Gismo\\Component\\Logging\\": "src/logging/src/Logging",
             "Html5\\Template\\": "src/template/src/Template",
             "Gismo\\Component\\Api\\": "src/api/src/Api",
+            "Gismo\\Component\\Config\\": "src/config/src/Config",
             "Gismo\\Component\\ApplicationDevTools\\": "src/applicationDevTools/src/ApplicationDevTools",
 
             "Gismo\\Component\\Annotation\\": "src/annotation/src/Annotation"

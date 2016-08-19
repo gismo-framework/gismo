@@ -11,7 +11,8 @@
 
 
     use Gismo\Component\PhpFoundation\Accessor\CallableAccessor;
-    use Html5\Template\FHtml;
+    use Html5\FHtml\FHtml;
+
 
     class GoVarVisualizer {
 
@@ -21,48 +22,64 @@
 			$printName = "<b>$propName</b>";
 			$class = "string";
 
+            $li = $tpl->elem("li");
+            $id = "gvarvisualize__" . self::$elemCounter++;
+
+
+
+
 			if (is_string($value)) {
-				$class = "string";
-				$printName .= " = '" . htmlspecialchars($value) . "'";
+			    $li->elem("label @for=$id @class=string")
+                        ->elem("b")->text("$propName")->end()
+                        ->elem("small")->text("string = '$value'");
 			}
 			if (is_object($value)) {
-				$class = "object";
-				$printName .= "<small> (". get_class($value) . ")</small>";
+			    $li->elem("label @for=$id @class=object")
+                        ->elem("b")->text("$propName")->end()
+                        ->elem("small")->text("(". get_class($value) . ")");
 			}
-			if (is_array($value)) {
-				$class = "array";
-				$printName .= "<small> [".count ($value). "]</small>";
+			if (is_array($value) && ! is_callable($value)) {
+			    $li->elem("label @for=$id @class=array")
+                        ->elem("b")->text("$propName")->end()
+                        ->elem("small")->text("[".count ($value). "]");
+
 			}
 			if (is_integer($value) || is_double($value) || is_float($value)) {
-				$printName .= " = $value";
+			    $li->elem("label @for=$id @class=string")
+                        ->elem("b")->text("$propName")->end()
+                        ->elem("small")->text("= $value");
+
 			}
-
-
-			$li = $tpl->elem("li");
-
-			$id = "gvarvisualize__" . self::$elemCounter++;
-
 
 			if (is_null($value)) {
-				$printName .= " = <b>NULL</b>";
+			    $li->elem("label @for=$id @class=string")
+                        ->elem("b")->text("$propName")->end()
+                        ->elem("small")->text("= NULL");
+
 			}
 			if (is_resource($value)) {
-				$printName .= " = #Ressource";
+                $li->elem("label @for=$id @class=string")
+                   ->elem("b")->text("$propName")->end()
+                   ->elem("small")->text("= #Ressource");
+
 			}
-			if (is_callable($value)) {
+			if (is_callable($value) && ! is_object($value)) {
+                $li->elem("label @for=$id @class=string")
+                   ->elem("b")->text("$propName")->end()
+                   ->elem("small")->text("= (Closure: " . (new CallableAccessor($value)) . ")");
 
-				$ref = new CallableAccessor($value);
-				$printName .= " (Closure: $ref)";
 			}
-			if ($value === TRUE)
-				$printName .= " = TRUE";
-			if ($value === FALSE)
-				$printName .= " = FALSE";
+			if ($value === TRUE) {
+                $li->elem("label @for=$id @class=string")
+                   ->elem("b")->text("$propName")->end()
+                   ->elem("small")->text("= TRUE");
+            }
+			if ($value === FALSE) {
+                $li->elem("label @for=$id @class=string")
+                   ->elem("b")->text("$propName")->end()
+                   ->elem("small")->text("= FALSE");
+            }
 
-
-
-
-			$li->elem("label @for=$id @class=$class")->text($printName)->end();
 			$li->elem("input @id= $id @type=checkbox @name=$id")->end();
 
 			if (is_object($value) || is_array($value)) {

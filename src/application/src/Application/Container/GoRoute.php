@@ -35,7 +35,7 @@
 
             $path = $req->ROUTE_START_URL . $this->routeDef->buildLink($params);
             if ($getParams !== null) {
-                $path .= http_build_query($getParams);
+                $path .= "?" . http_build_query($getParams);
             }
             return $path;
         }
