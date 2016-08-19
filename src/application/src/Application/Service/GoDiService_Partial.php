@@ -12,6 +12,7 @@
     use Gismo\Component\Application\Container\GoTemplate;
     use Gismo\Component\Partial\Page;
     use Gismo\Component\Partial\Partial;
+    use Html5\Template\Directive\GoCallDirective;
     use Html5\Template\HtmlTemplate;
 
 
@@ -20,6 +21,11 @@
         private function __di_init_service_partial() {
             $this[HtmlTemplate::class] = $this->service(function () {
                 $p = new HtmlTemplate();
+                $p->getDirective(GoCallDirective::class)->setCallback(function ($name, $params) {
+                    if (! is_array($params))
+                        $params = [];
+                    return $this[$name]($params);
+                });
                 return $p;
             });
 
@@ -28,6 +34,7 @@
                 $forTemplate = array_shift($path);
                 $tpl = $this[$forTemplate];
                 /* @var $tpl GoTemplate */
+                header("Content-type: text/css");
                 echo $tpl->getAsset($path);
             });
 

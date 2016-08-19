@@ -32,7 +32,6 @@ class GoTemplate extends DiCallChain
 
                 return $this->getAssetLink($path);
             });
-
             return $parser->renderHtmlFile($this->mTemplateFile, $§§parameters);
         };
     }
