@@ -258,6 +258,7 @@
 
             // Autodetect key
             if ($offset === null) {
+                throw new \InvalidArgumentException("NULL - offset in container[NULL] not allowed!");
                 if (is_callable($value)) {
                     $value = new GoServiceDiDefinition($value);
                 }
