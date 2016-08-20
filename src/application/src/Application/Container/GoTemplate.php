@@ -14,7 +14,7 @@ use Gismo\Component\Di\DiContainer;
 use Gismo\Component\HttpFoundation\Request\Request;
 use Html5\Template\HtmlTemplate;
 
-class GoTemplate extends DiCallChain
+class GoTemplate extends DiCallChain implements GoAssetContainer
 {
 
     protected $mTemplateFile;
@@ -44,8 +44,8 @@ class GoTemplate extends DiCallChain
     }
 
 
-    public function getAsset($path) {
+    public function getAssetContent($path)
+    {
         return file_get_contents(dirname($this->mTemplateFile) . "/" . implode("/", $path));
     }
-
 }

@@ -33,6 +33,7 @@
             $this->route->add("/assets/::path", function (array $path) {
                 $forTemplate = array_shift($path);
                 $tpl = $this[$forTemplate];
+
                 /* @var $tpl GoTemplate */
                 header("Content-type: text/css");
                 echo $tpl->getAsset($path);
