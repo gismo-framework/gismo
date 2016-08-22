@@ -28,6 +28,7 @@
      * @property StructAccessor $COOKIE
      * @property IpAccessor $REMOTE_IP
      * @property UrlAccessor $ROUTE_START_URL
+     * @property PathAccessor $ROUTE_START_PATH
      * @property PathAccessor $ROUTE_PATH
      * @property StringAccessor $METHOD
      * @property boolean $IS_FROM_INTERNAL_NETWORK
@@ -51,6 +52,7 @@
 
 
         private $ROUTE_START_URL;
+        private $ROUTE_START_PATH;
 
         private $ROUTE_PATH;
         
@@ -61,6 +63,7 @@
             return [
                 "URL" => (string) $this->URL,
                 "ROUTE_START_URL" => (string) $this->ROUTE_START_URL,
+                "ROUTE_START_PATH" => (string) $this->ROUTE_START_PATH,
                 "ROUTE_PATH" => (string) $this->ROUTE_PATH,
                 "REMOTE_IP" => (string) $this->REMOTE_IP,
                 "METHOD" => $this->METHOD,
@@ -83,6 +86,7 @@
             $this->HEADERS = isset($data["HEADERS"]) ? $data["HEADERS"] : [];
 
             $this->ROUTE_START_URL = isset($data["ROUTE_START_URL"]) ? $data["ROUTE_START_URL"] : null;
+            $this->ROUTE_START_PATH = isset($data["ROUTE_START_PATH"]) ? $data["ROUTE_START_PATH"] : null;
             $this->ROUTE_PATH = isset($data["ROUTE_PATH"]) ? $data["ROUTE_PATH"] : null;
 
             $this->METHOD = isset($data["METHOD"]) ? $data["METHOD"] : "GET";
@@ -108,6 +112,9 @@
 
                 case "ROUTE_START_URL":
                     return new UrlAccessor($this->ROUTE_START_URL);
+
+                case "ROUTE_START_PATH":
+                    return new PathAccessor($this->ROUTE_START_PATH);
 
                 case "ROUTE_PATH":
                     return new PathAccessor($this->ROUTE_PATH);

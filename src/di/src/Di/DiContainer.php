@@ -142,7 +142,11 @@
             }
 
             $ref = ($accessor = new CallableAccessor($fn))->getReflection();
-            $paramValues = $paramBuilder->build($ref->getParameters());
+            try {
+                $paramValues = $paramBuilder->build($ref->getParameters());
+            } catch (\Exception $e) {
+                throw new \Exception("Exception while building parameters for $accessor: {$e->getMessage()}", 0, $e);
+            }
             return $fn(...$paramValues);
         }
 

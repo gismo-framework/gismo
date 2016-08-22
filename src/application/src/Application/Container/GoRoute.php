@@ -33,7 +33,7 @@
                 $this->routeDef = new GoRouteDefinition($this->origRoute);
             }
 
-            $path = $req->ROUTE_START_URL . $this->routeDef->buildLink($params);
+            $path = $req->ROUTE_START_PATH . $this->routeDef->buildLink($params);
             if ($getParams !== null) {
                 $path .= "?" . http_build_query($getParams);
             }

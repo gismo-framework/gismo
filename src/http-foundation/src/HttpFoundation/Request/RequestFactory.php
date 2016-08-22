@@ -67,6 +67,7 @@
             }
 
             $scriptPath = dirname($server["SCRIPT_NAME"]);
+            $data["ROUTE_START_PATH"] = $scriptPath;
             $data["ROUTE_START_URL"] = $requestHostAndScheme . $scriptPath;
 
             if ( ! strpos($server["REQUEST_URI"], $scriptPath) === 0)

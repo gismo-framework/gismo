@@ -6,11 +6,15 @@
  * Time: 05:59
  */
 
-    namespace Gismo\Component\Application\Container;
+    namespace Gismo\Component\Application\Assets;
 
 
     interface GoAssetContainer {
 
-        public function getAssetContent($path);
+        public function getAssetContent(string $path) : string;
+
+        public function getAssetContentType(string $path=null) : string;
+
+        public function getAssetLinkUrl (string $path) : string;
 
     }

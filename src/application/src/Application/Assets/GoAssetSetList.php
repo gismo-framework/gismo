@@ -6,9 +6,10 @@
  * Time: 05:28
  */
 
-namespace Gismo\Component\Application\Container;
+namespace Gismo\Component\Application\Assets;
 
 
+use Gismo\Component\Application\Assets\Handler\GoAssetHandler;
 use Gismo\Component\Application\Context;
 use Gismo\Component\HttpFoundation\Request\Request;
 use Gismo\Component\PhpFoundation\Type\OrderedList;
@@ -20,12 +21,14 @@ class GoAssetSetList implements \ArrayAccess, GoAssetContainer
     private $mContext;
     private $mList;
     private $bindName;
+    private $assetHandler;
 
-    public function __construct($bindName, Context $context)
+    public function __construct($bindName, Context $context, GoAssetHandler $assetHandler)
     {
         $this->bindName = $bindName;
         $this->mContext = $context;
         $this->mList = new OrderedList();
+        $this->assetHandler = $assetHandler;
     }
 
 
@@ -35,38 +38,45 @@ class GoAssetSetList implements \ArrayAccess, GoAssetContainer
     private $mRenderMode = self::BIGFILE;
 
 
-    private function getAssetLinkUrl($path) {
+    public function getAssetLinkUrl(string $path) : string
+    {
         $req = $this->mContext[Request::class];
         /* @var $req Request */
-        return $req->ROUTE_START_URL . "/assets/{$this->bindName}/$path?av=";
+        return $req->ROUTE_START_PATH . "/assets/{$this->bindName}/$path?av={$this->mContext->assetRevision}";
+    }
+
+    /**
+     * @return GoAssetSet[]
+     */
+    public function __getAllAssetSets () :array {
+        $sets = [];
+        $this->mList->each(function ($what) use (&$sets){
+            $sets[] = $this->mContext[$what];
+        });
+        return $sets;
     }
 
 
     public function __invoke()
     {
-        $tpl = new FHtml();
-        if ($this->mRenderMode === self::RENDERMODE_DEBUG_INCLUDE) {
-            $tpl->elem(["link @url=? @type=text/css", $this->getAssetLinkUrl("combined.css")]);
-        } else {
-            $this->mList->each(function (GoAssetSet $assetSet) use ($tpl) {
-                foreach ($assetSet->getFileList() as $file) {
-                    // Append all Files from AssetSet - but link them to their own bind-url
-                    $tpl->elem(["link @url=? @type=text/css", $assetSet->getAssetLinkUrl($file)]);
-                }
-            });
+        if ($this->mContext->debug === true) {
+            return $this->assetHandler->renderSingleInclude($this);
         }
-        return $tpl->render();
+        return $this->assetHandler->renderOneBigFileInclude($this);
     }
 
 
 
     public function offsetExists($offset)
     {
+        return new \InvalidArgumentException("offsetExists() not available on GoAssetSetList");
+
     }
 
 
     public function offsetGet($offset)
     {
+        return new \InvalidArgumentException("offsetGet() not available on GoAssetSetList");
     }
 
 
@@ -82,16 +92,16 @@ class GoAssetSetList implements \ArrayAccess, GoAssetContainer
 
     public function offsetUnset($offset)
     {
+        return new \InvalidArgumentException("offsetExists() not available on GoAssetSetList");
     }
 
-    public function getAssetContent($path)
+    public function getAssetContent(string $path) : string
     {
-        $ret = "";
-        $this->mList->each(function (GoAssetSet $assetSet) use (&$ret) {
-            foreach ($assetSet->getFileList() as $file) {
-                $ret .= $assetSet->getAssetContent($file);
-            }
-        });
-        return $ret; // One big file.
+        return $this->assetHandler->getCombinedContent($this);
+    }
+
+    public function getAssetContentType(string $path=null) : string
+    {
+        return $this->assetHandler->getContentType($this);
     }
 }
