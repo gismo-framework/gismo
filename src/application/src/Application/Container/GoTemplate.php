@@ -30,9 +30,9 @@ class GoTemplate extends DiCallChain implements GoAssetContainer
         $this[0] = function ($§§parameters, HtmlTemplate $parser) {
 
             $parser->getExecBag()->expressionEvaluator->register("asset", function (array $arguments, $path) {
-
                 return $this->getAssetLinkUrl($path);
             });
+
             return $parser->renderHtmlFile($this->mTemplateFile, $§§parameters);
         };
     }

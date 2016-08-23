@@ -30,6 +30,11 @@
                     return $this[$name]($params);
                 });
 
+
+                /**
+                 * the asset() method: is defined in the GoTemplate itself.
+                 */
+
                 /**
                  * The link() Method:
                  *
