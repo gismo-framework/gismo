@@ -88,7 +88,7 @@
 
 
 
-        public function usePartial(string $bindName, string $className = GoListPartial::class) : self {
+        public function definePartial(string $bindName, string $className = GoListPartial::class) : self {
             if ( ! in_array(GoPartial::class, class_implements($className)))
                 throw new \InvalidArgumentException("usePartial(): Parameter 2 must be valid ClassName implementing GoPartial. Found '$className'");
             $this[$bindName] = $this->service(function () use ($className) {
@@ -99,7 +99,7 @@
 
 
 
-        public function useTemplate(string $bindName, string $filename) : self {
+        public function defineTemplate(string $bindName, string $filename) : self {
             $this[$bindName] = $this->service(function () use ($filename, $bindName) {
                 return new GoTemplate($this, $filename, $bindName);
             });

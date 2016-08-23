@@ -37,7 +37,7 @@
                 throw new \InvalidArgumentException("Invalid type");
             }
             if ($curNode->action !== null)
-                throw new \InvalidArgumentException("Conflicting route: '$route'");
+                throw new \InvalidArgumentException("Conflicting route: '{$route}[". implode(",", $route->getMethods()) . "]'");
             $curNode->action = $action;
         }
 

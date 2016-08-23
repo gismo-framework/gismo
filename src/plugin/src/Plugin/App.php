@@ -12,6 +12,7 @@
 
 
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\Plugin;
 
     interface App {
 

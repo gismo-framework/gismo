@@ -44,14 +44,14 @@
 
 
 
-        public function useAssetSet($bindName, $rootDir, $includeFilter="*.*", GoAssetRenderer $renderer) : self {
+        public function defineAssetSet($bindName, $rootDir, $includeFilter="*.*", GoAssetRenderer $renderer) : self {
             $this[$bindName] = $this->service(function () use ($bindName, $rootDir, $includeFilter, $renderer) {
                 return (new GoAssetSet($bindName, $rootDir, $this, $renderer))->include($includeFilter);
             });
             return $this;
         }
 
-        public function useAssetSetList($bindName, GoAssetHandler $handler) : self {
+        public function defineAssetSetList($bindName, GoAssetHandler $handler) : self {
             $this[$bindName] = $this->service(function () use ($bindName, $handler) {
                 return new GoAssetSetList($bindName, $this, $handler);
             });
