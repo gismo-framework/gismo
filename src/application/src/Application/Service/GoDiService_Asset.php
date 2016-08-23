@@ -26,6 +26,8 @@
 
         private function __di_init_service_asset() {
 
+
+
             $this->route->add("/assets/::path", function (array $path) {
                 $forTemplate = array_shift($path);
                 $tpl = $this[$forTemplate];

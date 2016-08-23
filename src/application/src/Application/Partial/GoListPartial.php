@@ -48,6 +48,7 @@
                 if ( ! isset ($this->mContext[$value]))
                     throw new \InvalidArgumentException("No template registred with bindName '$value'");
                 $this->mList->add($offset, $value);
+                return;
             } else if ( ! is_callable($value))
                 throw new \InvalidArgumentException("Value must be callable");
             $this->mList->add($offset, $value);
@@ -69,6 +70,7 @@
                         throw new \InvalidArgumentException("BindName '$what' was expected to return GoTemplate. But '" . gettype($tpl) . "' was returned");
                     $ret .= $tpl();
                 } else {
+
                     $ret .= ($this->mContext)($what);
                 }
             });

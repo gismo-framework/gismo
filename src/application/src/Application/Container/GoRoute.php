@@ -14,7 +14,7 @@
     use Gismo\Component\HttpFoundation\Request\Request;
     use Gismo\Component\Route\Route\GoRouteDefinition;
 
-    class GoRoute extends DiCallChain {
+    class GoRoute extends DiCallChain implements GoLinkable {
 
 
         public $origRoute;

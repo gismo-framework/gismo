@@ -11,7 +11,7 @@
 
     use Gismo\Component\Di\DiCallChain;
 
-    class GoApi extends DiCallChain {
+    class GoApi extends DiCallChain implements GoLinkable {
 
         /**
          * @var null|string

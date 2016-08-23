@@ -10,7 +10,7 @@
 
     use Gismo\Component\Di\DiCallChain;
 
-    class GoAction extends DiCallChain {
+    class GoAction extends DiCallChain implements GoLinkable {
         /**
          * @var null|string
          */
