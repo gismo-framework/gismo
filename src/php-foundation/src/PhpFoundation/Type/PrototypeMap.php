@@ -51,6 +51,13 @@
             if ($this->prototype instanceof self) {
                 $this->mapData = [];
             }
+            foreach ($this as $key => $val) {
+                if (is_object($val)) {
+                    if ($key === "prototype" || $key === "mapData")
+                        continue;
+                    $this->$key = null;
+                }
+            }
         }
 
 

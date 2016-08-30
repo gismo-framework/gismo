@@ -12,6 +12,6 @@
 
     interface Invokeable {
 
-        public function __invoke($params);
+        public function __invoke($params=[]);
 
     }

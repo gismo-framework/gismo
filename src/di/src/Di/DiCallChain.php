@@ -21,7 +21,7 @@
 
         private $filterOnly;
 
-        private $call = null;
+        protected $call = null;
 
         /**
          * @var OrderedList

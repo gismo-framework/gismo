@@ -9,7 +9,11 @@
     namespace Gismo\Component\Application\Partial;
 
 
-    class GoArrayPartial
+    class GoArrayPartial implements GoPartial
     {
 
+        public function __invoke($params=[])
+        {
+            // TODO: Implement __invoke() method.
+        }
     }

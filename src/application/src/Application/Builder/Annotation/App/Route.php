@@ -10,6 +10,7 @@
     namespace Gismo\Component\Application\Builder\Annotation\App;
     use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
+    use Gismo\Component\Application\Container\GoDeferBind;
     use Gismo\Component\Application\Container\GoRoute;
     use Gismo\Component\Application\Context;
 
@@ -89,9 +90,7 @@
             });
 
             // Link Bind-Name to Router
-            $context->route->add($this->route, function ($§§parameters) use ($routeBindName, $context) {
-                 $context[$routeBindName]($§§parameters);
-            });
+            $context->route->add($this->route, new GoDeferBind($context, $routeBindName));
 
 
         }

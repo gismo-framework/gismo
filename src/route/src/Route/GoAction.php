@@ -12,6 +12,7 @@
     use Gismo\Component\Di\DiCallChain;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\PhpFoundation\Accessor\CallableAccessor;
     use Gismo\Component\PhpFoundation\Type\ArrayAccessOrderedList;
     use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Type\RouterRequest;
@@ -51,6 +52,10 @@
 
         }
 
+
+        public function __toString() : string {
+            return "[ROUTE:" . (string)$this->mRoute . " -> " . (new CallableAccessor($this->call)) . "]";
+        }
 
 
 
