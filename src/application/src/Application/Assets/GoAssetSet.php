@@ -44,7 +44,7 @@ class GoAssetSet implements GoAssetContainer
 
 
     /**
-     * @param string $filter
+     * @param string|string[] $filter
      * @return $this
      */
     public function include($filter = "*.*") : self {

@@ -51,8 +51,13 @@
         }
 
 
-
-        public function assetSet(string $rootDir, string $includeFilter="*.*", GoAssetRenderer $renderer) : GoServiceDiDefinition {
+        /**
+         * @param string $rootDir
+         * @param string|string[] $includeFilter
+         * @param GoAssetRenderer $renderer
+         * @return GoServiceDiDefinition
+         */
+        public function assetSet(string $rootDir, $includeFilter="*.*", GoAssetRenderer $renderer) : GoServiceDiDefinition {
             return $this->service(function () use ($rootDir, $includeFilter, $renderer) {
                 return (new GoAssetSet($rootDir, $this, $renderer))->include($includeFilter);
             });

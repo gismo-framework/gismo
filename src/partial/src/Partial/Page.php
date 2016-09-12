@@ -36,7 +36,6 @@
 
         public function __invoke($params = [])
         {
-            $params = parent::__invoke($params);
             /* @var $parser HtmlTemplate */
             $parser = $this->mDi[HtmlTemplate::class];
             $parser->getExecBag()->expressionEvaluator->register("asset", function (array $arguments, $path) {

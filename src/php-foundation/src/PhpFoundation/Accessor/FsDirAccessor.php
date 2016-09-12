@@ -62,16 +62,27 @@
          * Return list of relative Filenames to rootDir matching $filter
          *
          * @param int $sortingOrder
-         * @param null $filter
+         * @param null|string|string[] $filter
          * @return string[]
          */
         public function scanRecFile($filter=null, $sortingOrder=SCANDIR_SORT_ASCENDING) : array {
             $result = [];
+            if ($filter !== null && ! is_array($filter))
+                $filter = [$filter];
+
             $this->scanRecCallback(function ($file, $relPath, $absolutePath) use (&$result, $filter) {
                 if ( ! is_file($absolutePath))
                     return;
                 if ($filter !== null) {
-                    if ( ! fnmatch($filter, $file))
+                    $match = false;
+                    foreach ($filter as $curFilter) {
+                        if (fnmatch($curFilter, $file)) {
+                            $match = true;
+                            break;
+                        }
+                    }
+
+                    if ( ! $match)
                         return;
                 }
                 $result[] = $relPath;
