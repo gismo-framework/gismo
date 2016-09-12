@@ -286,6 +286,13 @@
             if (is_string($offset)) {
                 $offset = (string)$offset; // Translate Classes to plain type (Accessors)
 
+                if (is_string($value)) {
+                    $className = $value;
+                    $value = new GoServiceDiDefinition(function() use ($className) {
+                        return new $className();
+                    });
+                }
+
                 if (is_callable($value)) {
                     $value = new GoServiceDiDefinition($value); // Assume it is a service
                 }
