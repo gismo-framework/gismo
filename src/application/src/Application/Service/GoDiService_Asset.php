@@ -41,7 +41,10 @@
 
             $this[HtmlTemplate::class] = $this->filter(function (HtmlTemplate $§§input) {
                 $§§input->getExecBag()->expressionEvaluator->register("asset", function (array $arguments, $path) {
-                    return $this->getAssetLinkUrl($path);
+                    $asset = $this[$path[0]];
+                    if ( ! $asset instanceof GoAssetContainer)
+                        throw new \Exception("asset($path[0],...): no GoAssetContainer");
+                    return $asset->getAssetLinkUrl($path);
                 });
             });
 
