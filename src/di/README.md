@@ -39,6 +39,17 @@ $di["shopName"] = function () : string {
 }
 ```
 
+Or give the ClassName only:
+
+```
+$di["someName"] = SomeClass::class;
+```
+equals:
+```
+$di["someName"] = $di->service(function () {
+    return new SomeClass();
+});
+```
 
 #### Section Prototypes
 
