@@ -37,23 +37,22 @@
 
 
         /**
-         * @return array
+         * @return \stdClass
          */
         public function __invoke() {
-            $meData = [
-                "name" => $this->name,
-                "html" => $this->html,
-                "link" => $this->link,
-                "isLeaf" => true,
-                "childs" => null
-            ];
+            $meData = new \stdClass();
+            $meData->name = $this->name;
+            $meData->html = $this->html;
+            $meData->link = $this->link;
+            $meData->isLeaf = true;
+            $meData->childs = null;
 
             $keys = $this->getDefinedKeys();
             if (count ($keys) > 0) {
-                $meData["childs"] = [];
-                $meData["isLeaf"] = false;
+                $meData->childs = [];
+                $meData->isLeaf = false;
                 foreach ($keys as $curKey) {
-                    $meData["childs"][] = $this[$curKey]->__invoke();
+                    $meData->childs[] = $this[$curKey]->__invoke();
                 }
             }
             return $meData;
