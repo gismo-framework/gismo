@@ -30,12 +30,16 @@ class GoAssetSet implements GoAssetContainer
      */
     private $assetRenderer;
 
-    public function __construct($bindName, $rootDir, Context $context, GoAssetRenderer $assetRenderer)
+    public function __construct($rootDir, Context $context, GoAssetRenderer $assetRenderer)
     {
         $this->mContext = $context;
-        $this->mBindName = $bindName;
         $this->mRootDir = $rootDir;
         $this->assetRenderer = $assetRenderer;
+    }
+
+
+    public function __di_set_bindname(string $bindName) {
+        $this->mBindName = $bindName;
     }
 
 

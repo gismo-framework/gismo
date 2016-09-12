@@ -18,7 +18,12 @@
 
         private $isProtected = false;
 
+        protected $mBindName = null;
 
+
+        public function __di_set_bindname (string $bindname) {
+            $this->mBindName = $bindname;
+        }
 
 
         /**

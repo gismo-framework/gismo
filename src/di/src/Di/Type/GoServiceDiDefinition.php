@@ -37,6 +37,9 @@
         public function __diGetInstance(DiContainer $di, array $params) {
             if ( ! $this->isResolved) {
                 $ret = $di($this->factory, $params);
+                if (method_exists($ret, "__di_set_bindname")) {
+                    $ret->__di_set_bindname($this->mBindName);
+                }
                 $this->instance = $this->_applyFilters($ret, $di);
                 $this->isResolved = true;
             }

@@ -270,6 +270,7 @@
                 if ($value instanceof GoAbstractDiDefinition) {
                     if ($value->__diGetReturnClassName() === null)
                         throw new \InvalidArgumentException("No return-type specified on factory.");
+
                     $this->__setDiDef($value->__diGetReturnClassName(), $value);
                     return;
                 }
@@ -298,6 +299,7 @@
                 }
 
                 if ($value instanceof GoAbstractDiDefinition) {
+                    $value->__di_set_bindname($offset);
                     $this->__setDiDef($offset, $value);
                     return;
                 }

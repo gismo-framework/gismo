@@ -23,12 +23,15 @@ class GoAssetSetList implements \ArrayAccess, GoAssetContainer
     private $bindName;
     private $assetHandler;
 
-    public function __construct($bindName, Context $context, GoAssetHandler $assetHandler)
+    public function __construct(Context $context, GoAssetHandler $assetHandler)
     {
-        $this->bindName = $bindName;
         $this->mContext = $context;
         $this->mList = new OrderedList();
         $this->assetHandler = $assetHandler;
+    }
+
+    public function __di_set_bindname(string $bindName) {
+        $this->bindName = $bindName;
     }
 
 

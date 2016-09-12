@@ -73,6 +73,18 @@ $di[] = $di->factory(function () : ConcreteClass {
 });
 ```
 
+Recognize the bindName from factory or Service:
+
+```
+class SomeClass {
+
+    /**
+     * Will be called when Service is resolved or Factory is called
+     */
+    public function __di_set_bindname(string $name) {
+    }
+
+}
 
 
 ### Constants

@@ -22,6 +22,9 @@
 
         public function __diGetInstance(DiContainer $di, array $params) {
             $val = $di($this->factory, $params);
+            if (method_exists($val, "__di_set_bindname")) {
+                $val->__di_set_bindname($this->mBindName);
+            }
             $val = $this->_applyFilters($val, $di);
             return $val;
         }
