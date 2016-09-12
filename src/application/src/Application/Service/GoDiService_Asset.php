@@ -34,7 +34,7 @@
 
                 /* @var $tpl GoTemplate */
                 $subPath = implode ("/", $path);
-                header("Content-type: " . $tpl->getAssetContentType($subPath));
+                header("Content-type: " . $tpl->getAssetContentType($subPath) . ";charset=utf-8");
                 echo $tpl->getAssetContent($subPath);
             });
 
