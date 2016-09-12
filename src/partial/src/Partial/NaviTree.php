@@ -14,7 +14,7 @@
 
     class NaviTree extends PrototypeMap {
 
-        public function __construct($prototype)
+        public function __construct()
         {
             parent::__construct($this);
         }
