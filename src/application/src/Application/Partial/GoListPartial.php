@@ -63,15 +63,15 @@
         public function __invoke($params=[])
         {
             $ret = "";
-            $this->mList->each(function ($what) use (&$ret) {
+            $this->mList->each(function ($what) use (&$ret, $params) {
                 if (is_string($what)) {
                     $tpl = $this->mContext[$what];
                     if ( ! $tpl instanceof GoTemplate)
                         throw new \InvalidArgumentException("BindName '$what' was expected to return GoTemplate. But '" . gettype($tpl) . "' was returned");
-                    $ret .= $tpl();
+                    $ret .= $tpl($params);
                 } else {
 
-                    $ret .= ($this->mContext)($what);
+                    $ret .= ($this->mContext)($what, $params);
                 }
             });
             return $ret;
