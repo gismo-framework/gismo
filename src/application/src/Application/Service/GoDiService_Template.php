@@ -27,7 +27,7 @@
                 $p->getDirective(GoCallDirective::class)->setCallback(function ($name, $params) {
                     if (! is_array($params))
                         $params = [];
-                    echo "Call $name...";
+
                     return $this[$name]($params);
                 });
 
