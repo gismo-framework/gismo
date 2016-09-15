@@ -119,5 +119,29 @@
         }
 
 
+        /**
+         * Register all Templates found in this path matching a pattern
+         *
+         * <example>
+         * // This will add all Templates from /tpl
+         * $context->addTemplatePath(__DIR__ . "/tpl");
+         * </example>
+         *
+         *
+         * @param string $path
+         */
+        public function addTemplatePath (string $path, string $pattern = "tpl.*.html") {
+            $names = glob($path . "/" . $pattern);
+            foreach ($names as $name) {
+                if ( ! preg_match ("/^(?<bind>.+)(\\.html|\\.htm)$/i", basename($name), $matches)) {
+                    throw new \InvalidArgumentException("Cannot extract bindName from fileName: '$name'. Must end with .html!");
+                }
+
+                $bind = $matches["bind"];
+                $this[$bind] = $this->template($name);
+            }
+        }
+
+
 
     }
