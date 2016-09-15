@@ -15,8 +15,11 @@
     use Gismo\Component\Application\Partial\GoListPartial;
     use Gismo\Component\Application\Partial\GoPartial;
     use Gismo\Component\Di\Ex\NoFactoryException;
+    use Gismo\Component\Di\Type\GoServiceDiDefinition;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\Partial\Page;
     use Html5\Template\Directive\GoCallDirective;
+    use Html5\Template\Directive\GoExtendsDirective;
     use Html5\Template\HtmlTemplate;
 
     trait GoDiService_Template
@@ -31,7 +34,9 @@
                     return $this[$name]($params);
                 });
 
-
+                $p->getDirective(GoExtendsDirective::class)->setExtendsCallback(function ($name, $params) {
+                    return $this[$name]($params);
+                });
                 /**
                  * the asset() method: is defined in the GoTemplate itself.
                  */
@@ -93,22 +98,26 @@
         }
 
 
-
-        public function definePartial(string $bindName, string $className = GoListPartial::class) : self {
-            if ( ! in_array(GoPartial::class, class_implements($className)))
-                throw new \InvalidArgumentException("usePartial(): Parameter 2 must be valid ClassName implementing GoPartial. Found '$className'");
-            $this[$bindName] = $this->service(function () use ($className) {
-                return new $className($this);
-            });
-            return $this;
+        /**
+         * Register a new Template
+         *
+         * <example>
+         * $context["tpl.some.template"] = $context->template(__DIR__ . "/tpl/tpl.some.template.html");
+         * </example>
+         *
+         * @param string $filename
+         * @return GoServiceDiDefinition
+         */
+        public function template(string $filename) : GoServiceDiDefinition {
+            return $this->service(
+                    function () use ($filename) {
+                        $page = new Page($this);
+                        $page->setTemplate($filename);
+                        return $page;
+                    }
+            );
         }
 
 
 
-        public function defineTemplate(string $bindName, string $filename) : self {
-            $this[$bindName] = $this->service(function () use ($filename, $bindName) {
-                return new GoTemplate($this, $filename, $bindName);
-            });
-            return $this;
-        }
     }
