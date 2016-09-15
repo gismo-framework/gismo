@@ -13,6 +13,7 @@
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
     use Html5\Template\HtmlTemplate;
+    use Html5\Template\Node\GoDocumentNode;
 
     class Page extends Partial implements GoAssetContainer {
 
@@ -34,6 +35,11 @@
         }
 
 
+        /**
+         * @var GoDocumentNode
+         */
+        private $mParsedTemplate = null;
+
         public function __invoke($params = [])
         {
             /* @var $parser HtmlTemplate */
@@ -41,7 +47,10 @@
             $parser->getExecBag()->expressionEvaluator->register("asset", function (array $arguments, $path) {
                 return $this->getAssetLinkUrl($path);
             });
-            return $parser->renderHtmlFile($this->mTemplateFile, $params);
+            if ( $this->mParsedTemplate === null) {
+                $this->mParsedTemplate = $parser->buildFile($this->mTemplateFile);
+            }
+            return $this->mParsedTemplate->run($params);
         }
 
         public function getAssetContent(string $path) : string

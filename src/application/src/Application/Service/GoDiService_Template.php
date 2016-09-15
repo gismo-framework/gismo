@@ -17,6 +17,8 @@
     use Gismo\Component\Di\Ex\NoFactoryException;
     use Gismo\Component\Di\Type\GoServiceDiDefinition;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\Partial\HtmlPartial;
+    use Gismo\Component\Partial\NaviTree;
     use Gismo\Component\Partial\Page;
     use Html5\Template\Directive\GoCallDirective;
     use Html5\Template\Directive\GoExtendsDirective;
@@ -25,6 +27,14 @@
     trait GoDiService_Template
     {
         private function __di_init_service_template() {
+            $this[HtmlPartial::class] = $this->factory(function () {
+                return new HtmlPartial($this);
+            });
+
+            $this[NaviTree::class] = $this->factory(function () {
+                return new NaviTree();
+            });
+
             $this[HtmlTemplate::class] = $this->service(function (Request $req) {
                 $p = new HtmlTemplate();
                 $p->getDirective(GoCallDirective::class)->setCallback(function ($name, $params) {

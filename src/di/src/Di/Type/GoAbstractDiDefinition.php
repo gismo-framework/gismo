@@ -76,7 +76,7 @@
 
             $this->filters->each(function ($what, $prio, $alias) use (&$input, $di, $requireClassName) {
 
-                $return = $di($what, ["§§input" => $input]);
+                $return = $di($what, ["§§input" => $input, "§§" => $input]);
                 if ($requireClassName !== null) {
                     if ($return === null) {
                         $return = $input;

@@ -109,7 +109,7 @@
          * Set a Filter on a DiName
          *
          * Available Parameters:
-         * $§§input : The Value to be filtered
+         * $§§ : The Target to be filtered
          *
          * Return Values:
          * void     : Keep the Value
@@ -290,7 +290,7 @@
                 if (is_string($value)) {
                     $className = $value;
                     $value = new GoServiceDiDefinition(function() use ($className) {
-                        return new $className();
+                        return $this[$className];
                     });
                 }
 
