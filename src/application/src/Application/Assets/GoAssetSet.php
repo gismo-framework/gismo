@@ -10,6 +10,9 @@ namespace Gismo\Component\Application\Assets;
 
 
 use Gismo\Component\Application\Assets\Renderer\GoAssetRenderer;
+use Gismo\Component\Application\Assets\Renderer\GoLessAssetRenderer;
+use Gismo\Component\Application\Assets\Renderer\GoMimeAssetTenderer;
+use Gismo\Component\Application\Assets\Renderer\GoScssAssetRenderer;
 use Gismo\Component\Application\Context;
 use Gismo\Component\HttpFoundation\Request\Request;
 
@@ -30,11 +33,16 @@ class GoAssetSet implements GoAssetContainer
      */
     private $assetRenderer;
 
-    public function __construct($rootDir, Context $context, GoAssetRenderer $assetRenderer)
+
+    private $typeToRenderer = [
+            ".less" => GoLessAssetRenderer::class,
+            ".scss" => GoScssAssetRenderer::class
+    ];
+
+    public function __construct($rootDir, Context $context)
     {
         $this->mContext = $context;
         $this->mRootDir = $rootDir;
-        $this->assetRenderer = $assetRenderer;
     }
 
 
@@ -67,13 +75,33 @@ class GoAssetSet implements GoAssetContainer
     public function getAssetContent(string $path) : string {
         if (strpos($path, "..") !== false || strpos($path, "~") !== false)
             throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
-        return $this->assetRenderer->getContent($this->mRootDir . "/". $path);
+
+        $useRenderer = GoMimeAssetTenderer::class;
+        if (preg_match("/(\\.[a-z]+)$/", $path, $matches)) {
+            $ext = $matches[1];
+            if (isset ($this->typeToRenderer[$ext]))
+                $useRenderer = $this->typeToRenderer[$ext];
+        }
+
+        $renderer = new $useRenderer();
+
+        return $renderer->getContent($this->mRootDir . "/". $path);
     }
 
     public function getAssetContentType(string $path = null) : string
     {
         if (strpos($path, "..") !== false || strpos($path, "~") !== false)
             throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
-        return $this->assetRenderer->getContentType($path);
+
+        $useRenderer = GoMimeAssetTenderer::class;
+        if (preg_match("/(\\.[a-z]+)$/", $path, $matches)) {
+            $ext = $matches[1];
+            if (isset ($this->typeToRenderer[$ext]))
+                $useRenderer = $this->typeToRenderer[$ext];
+        }
+
+        $renderer = new $useRenderer();
+
+        return $renderer->getContentType($path);
     }
 }

@@ -34,7 +34,7 @@
 
                 /* @var $tpl GoTemplate */
                 $subPath = implode ("/", $path);
-                header("Content-type: " . $tpl->getAssetContentType($subPath) . ";charset=utf-8");
+                header("Content-Type: " . $tpl->getAssetContentType($subPath) . ";charset=utf-8");
                 echo $tpl->getAssetContent($subPath);
             });
 
@@ -57,9 +57,9 @@
          * @param GoAssetRenderer $renderer
          * @return GoServiceDiDefinition
          */
-        public function assetSet(string $rootDir, $includeFilter="*.*", GoAssetRenderer $renderer) : GoServiceDiDefinition {
-            return $this->service(function () use ($rootDir, $includeFilter, $renderer) {
-                return (new GoAssetSet($rootDir, $this, $renderer))->include($includeFilter);
+        public function assetSet(string $rootDir, $includeFilter="*.*") : GoServiceDiDefinition {
+            return $this->service(function () use ($rootDir, $includeFilter) {
+                return (new GoAssetSet($rootDir, $this))->include($includeFilter);
             });
         }
 
