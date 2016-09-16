@@ -18,7 +18,7 @@
         "firephp/firephp-core": "*",
         "doctrine/annotations": "*",
         "leafo/scssphp": "0.6.5",
-        "leafo/lessphp": "*",
+        "oyejorge/less.php": "~1.7.0.10",
         "html5/htmlreader": "*",
         "html5/template": "*",
         "html5/fhtml": "*"
