@@ -17,9 +17,12 @@
 
         private $storeDir;
 
+        private $purgeTime = null;
+
         public function __construct($rootDir = "/tmp")
         {
             $this->storeDir = $rootDir;
+
         }
 
 
@@ -32,14 +35,26 @@
         }
 
 
+        protected function getPurgeTime ($zoneId) {
+            $purgeFile = $this->storeDir . "/purge.{$zoneId}";
+            if (file_exists($purgeFile))
+                $this->purgeTime = (int)file_get_contents($purgeFile);
+        }
+
+
         public function getItem($zoneId, $key)
         {
             $file = $this->getFileName($zoneId, $key);
             if ( ! file_exists($file)) {
                 return null;
             }
-            return unserialize(file_get_contents($file));
+            $item = unserialize(file_get_contents($file));
+            if ( ! $item instanceof CacheItem)
+                return null;
 
+            if ($this->getPurgeTime($zoneId) > $item->__getData("expires"))
+                return null;
+            return $item;
         }
 
         public function getItems($zoneId, array $keys = array())
@@ -54,7 +69,7 @@
 
         public function clear($zoneId)
         {
-            // TODO: Implement clear() method.
+            file_put_contents($this->storeDir . "/purge.{$zoneId}", time());
         }
 
         public function deleteItem($zoneId, $key)

@@ -14,6 +14,7 @@
     use Gismo\Component\Application\Service\GoDiService_App;
     use Gismo\Component\Application\Service\GoDiService_Asset;
     use Gismo\Component\Application\Service\GoDiService_DevTools;
+    use Gismo\Component\Application\Service\GoDiService_Event;
     use Gismo\Component\Application\Service\GoDiService_Partial;
     use Gismo\Component\Application\Service\GoDiService_Template;
     use Gismo\Component\Di\DiContainer;
@@ -26,7 +27,8 @@
      * @property $debug bool
      */
     class Context extends DiContainer {
-        use GoDiService_Route, GoDiService_Template, GoDiService_Asset, GoDiService_Api, GoDiService_App, GoDiService_DevTools;
+        use GoDiService_Route, GoDiService_Template, GoDiService_Asset, GoDiService_Api, GoDiService_App, GoDiService_DevTools,
+            GoDiService_Event;
         
 
         public function __construct($debug=false, $assetRevision="0-0-0")
