@@ -38,7 +38,8 @@
         protected function getPurgeTime ($zoneId) {
             $purgeFile = $this->storeDir . "/purge.{$zoneId}";
             if (file_exists($purgeFile))
-                $this->purgeTime = (int)file_get_contents($purgeFile);
+                return (int)file_get_contents($purgeFile);
+            return 0;
         }
 
 
@@ -52,8 +53,9 @@
             if ( ! $item instanceof CacheItem)
                 return null;
 
-            if ($this->getPurgeTime($zoneId) > $item->__getData("expires"))
+            if ($this->getPurgeTime($zoneId) > $item->__getData("created")) {
                 return null;
+            }
             return $item;
         }
 

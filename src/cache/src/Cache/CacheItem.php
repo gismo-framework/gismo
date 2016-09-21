@@ -17,6 +17,7 @@
         private $key;
         private $value;
         private $expires = null;
+        private $created = null;
         private $isHit;
 
 
@@ -24,6 +25,7 @@
         {
             $this->key = $key;
             $this->isHit = $isHit;
+            $this->created = time();
         }
 
 
