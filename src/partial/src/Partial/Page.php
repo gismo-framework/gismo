@@ -44,7 +44,13 @@
         {
             /* @var $parser HtmlTemplate */
             $parser = $this->mDi[HtmlTemplate::class];
-            $parser->getExecBag()->expressionEvaluator->register("asset", function (array $arguments, $path) {
+            $parser->getExecBag()->expressionEvaluator->register("asset", function (array $arguments, $path, $template=null) {
+                if ($template !== null) {
+                    $tpl = $this->mDi[$template];
+                    if ( ! $tpl instanceof GoAssetContainer)
+                        throw new \InvalidArgumentException("asset('$path', '$template'): Template '$template' is not a AssetContianer.");
+                    return $tpl->getAssetLinkUrl($path);
+                }
                 return $this->getAssetLinkUrl($path);
             });
             if ( $this->mParsedTemplate === null) {
