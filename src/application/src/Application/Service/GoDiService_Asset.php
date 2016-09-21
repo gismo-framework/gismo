@@ -9,6 +9,8 @@
     namespace Gismo\Component\Application\Service;
 
 
+    use gismo\Cache\Cache;
+    use gismo\Cache\Driver\NoCacheDriver;
     use Gismo\Component\Application\Assets\GoAssetContainer;
     use Gismo\Component\Application\Assets\GoAssetSet;
     use Gismo\Component\Application\Assets\GoAssetSetList;
@@ -26,16 +28,35 @@
     trait GoDiService_Asset {
 
         private function __di_init_service_asset() {
+
+            $this["cache.frontend.asset"] = $this->service(function () {
+                return new Cache(new NoCacheDriver(), $this, "cache.frontend.asset", 0);
+            });
+
             $this->route->add("/assets/::path", function (array $path) {
                 $forTemplate = array_shift($path);
                 $tpl = $this[$forTemplate];
                 if ( ! $tpl instanceof GoAssetContainer)
                     throw new \InvalidArgumentException("Bind name '$path' is no valid AssetContainer.");
 
+                $cache = $this["cache.frontend.asset"];
+                if ( ! $cache instanceof Cache)
+                    throw new \InvalidArgumentException("cache.fontend.asset must be instance of Cache");
+
+
                 /* @var $tpl GoTemplate */
                 $subPath = implode ("/", $path);
-                header("Content-Type: " . $tpl->getAssetContentType($subPath) . ";charset=utf-8");
-                echo $tpl->getAssetContent($subPath);
+
+                $assetData = $cache(function () use ($tpl, $subPath) {
+                    return [
+                        0 => $tpl->getAssetContentType($subPath),
+                        1 => $tpl->getAssetContent($subPath)
+
+                    ];
+                } , ["path" => $path]);
+
+                header("Content-Type: {$assetData[0]};charset=utf-8");
+                echo $assetData[1];
             });
 
 

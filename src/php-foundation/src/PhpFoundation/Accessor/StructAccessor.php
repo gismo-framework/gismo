@@ -65,7 +65,6 @@
 
 
 
-
         /**
          * Whether a offset exists
          * @link  http://php.net/manual/en/arrayaccess.offsetexists.php
