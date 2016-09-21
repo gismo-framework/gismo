@@ -6,11 +6,10 @@
      * Time: 15:22
      */
 
-    namespace gismo\Cache\Driver;
+    namespace  Gismo\Component\Cache\Driver;
 
 
-    use gismo\Cache\CacheItem;
-    use Psr\Cache\CacheItemPoolInterface;
+    use  Gismo\Component\Cache\CacheItem;
 
     class NoCacheDriver implements CacheDriver
     {

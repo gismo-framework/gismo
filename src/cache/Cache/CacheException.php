@@ -6,7 +6,7 @@
      * Time: 13:43
      */
 
-    namespace gismo\Cache;
+    namespace  Gismo\Component\Cache;
 
 
     class CacheException extends \Exception implements \Psr\Cache\CacheException

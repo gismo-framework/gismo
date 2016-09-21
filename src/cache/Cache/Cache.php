@@ -6,10 +6,10 @@
      * Time: 13:16
      */
 
-    namespace gismo\Cache;
+    namespace  Gismo\Component\Cache;
 
 
-    use gismo\Cache\Driver\CacheDriver;
+    use Gismo\Component\Cache\Driver\CacheDriver;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\PhpFoundation\Accessor\CallableAccessor;
     use Psr\Cache\CacheItemInterface;

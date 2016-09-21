@@ -7,7 +7,7 @@
      */
 
 
-    namespace gismo\Cache;
+    namespace  Gismo\Component\Cache;
 
 
     use Psr\Cache\CacheItemInterface;

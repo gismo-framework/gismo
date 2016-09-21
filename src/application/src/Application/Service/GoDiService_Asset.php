@@ -9,8 +9,7 @@
     namespace Gismo\Component\Application\Service;
 
 
-    use gismo\Cache\Cache;
-    use gismo\Cache\Driver\NoCacheDriver;
+
     use Gismo\Component\Application\Assets\GoAssetContainer;
     use Gismo\Component\Application\Assets\GoAssetSet;
     use Gismo\Component\Application\Assets\GoAssetSetList;
@@ -18,6 +17,8 @@
     use Gismo\Component\Application\Assets\Renderer\GoAssetRenderer;
     use Gismo\Component\Application\Assets\Renderer\GoCssAssetRenderer;
     use Gismo\Component\Application\Container\GoTemplate;
+    use Gismo\Component\Cache\Cache;
+    use Gismo\Component\Cache\Driver\NoCacheDriver;
     use Gismo\Component\Di\Type\GoServiceDiDefinition;
     use Gismo\Component\Partial\Page;
     use Gismo\Component\Partial\Partial;

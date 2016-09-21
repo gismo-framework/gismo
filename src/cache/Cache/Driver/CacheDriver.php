@@ -6,10 +6,10 @@
      * Time: 13:18
      */
 
-    namespace gismo\Cache\Driver;
+    namespace  Gismo\Component\Cache\Driver;
 
 
-    use gismo\Cache\CacheItem;
+    use Gismo\Component\Cache\CacheItem;
 
 
     interface CacheDriver
