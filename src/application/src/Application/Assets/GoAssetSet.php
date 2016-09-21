@@ -62,7 +62,14 @@ class GoAssetSet implements GoAssetContainer
 
 
     public function getFileList() {
-        return goFsDir($this->mRootDir)->scanRecFile($this->mIncludeFilter);
+        $files = [];
+        if ($this->mRootDir !== null)
+            $files = goFsDir($this->mRootDir)->scanRecFile($this->mIncludeFilter);
+        foreach ($this->mVirtualAssets as $path => $val) {
+            if ( ! in_array($path, $files))
+                $files[] = $path;
+        }
+        return $files;
     }
 
     public function getAssetLinkUrl(string $path) : string {
@@ -71,10 +78,26 @@ class GoAssetSet implements GoAssetContainer
         return $req->ROUTE_START_PATH . "/assets/{$this->mBindName}/$path?av={$this->mContext->assetRevision}";
     }
 
+    private $mVirtualAssets = [];
+
+
+    public function setVirtualAsset (string $path, string $contentType, callable $fn) : self {
+        $this->mVirtualAssets[$path] = [$contentType, $fn];
+        return $this;
+    }
+
 
     public function getAssetContent(string $path) : string {
         if (strpos($path, "..") !== false || strpos($path, "~") !== false)
             throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
+
+
+        if (isset ($this->mVirtualAssets[$path])) {
+            return ($this->mContext)($this->mVirtualAssets[$path][1], ["path"=>$path]);
+        }
+
+        if ($this->mRootDir === null)
+            throw new \InvalidArgumentException("VirtualAlias '$path' not registered");
 
         $useRenderer = GoMimeAssetTenderer::class;
         if (preg_match("/(\\.[a-z]+)$/", $path, $matches)) {
@@ -92,6 +115,10 @@ class GoAssetSet implements GoAssetContainer
     {
         if (strpos($path, "..") !== false || strpos($path, "~") !== false)
             throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
+
+        if (isset ($this->mVirtualAssets[$path])) {
+            return $this->mVirtualAssets[$path][0];
+        }
 
         $useRenderer = GoMimeAssetTenderer::class;
         if (preg_match("/(\\.[a-z]+)$/", $path, $matches)) {
