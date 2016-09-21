@@ -21,7 +21,8 @@
         "oyejorge/less.php": "~1.7.0.10",
         "html5/htmlreader": "*",
         "html5/template": "*",
-        "html5/fhtml": "*"
+        "html5/fhtml": "*",
+        "psr/cache": "~1.0"
     },
     "autoload": {
         "psr-4": {
