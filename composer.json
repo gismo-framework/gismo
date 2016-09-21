@@ -44,7 +44,7 @@
             "Gismo\\Component\\Api\\": "src/api/src/Api",
             "Gismo\\Component\\Config\\": "src/config/src/Config",
             "Gismo\\Component\\ApplicationDevTools\\": "src/applicationDevTools/src/ApplicationDevTools",
-            "Gismo\\Component\\Cache\\": "src/cacke/src/Cache",
+            "Gismo\\Component\\Cache\\": "src/cache/src/Cache",
             "Gismo\\Component\\Annotation\\": "src/annotation/src/Annotation"
         },
         "files": [
