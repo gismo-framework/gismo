@@ -9,14 +9,37 @@
     namespace gismo\Cache\Driver;
 
 
+    use gismo\Cache\CacheItem;
     use Psr\Cache\CacheItemInterface;
 
     class FileSystemCacheDriver implements CacheDriver
     {
 
+        private $storeDir;
+
+        public function __construct($rootDir = "/tmp")
+        {
+            $this->storeDir = $rootDir;
+        }
+
+
+        protected function getCacheKey (string $zoneId, string $key) {
+            return $zoneId . "_" . $key;
+        }
+
+        protected function getFileName ($zoneId, $key) {
+            return $this->storeDir . "/" . $this->getCacheKey($zoneId, $key);
+        }
+
+
         public function getItem($zoneId, $key)
         {
-            // TODO: Implement getItem() method.
+            $file = $this->getFileName($zoneId, $key);
+            if ( ! file_exists($file)) {
+                return null;
+            }
+            return unserialize(file_get_contents($file));
+
         }
 
         public function getItems($zoneId, array $keys = array())
@@ -44,12 +67,13 @@
             // TODO: Implement deleteItems() method.
         }
 
-        public function save($zoneId, CacheItemInterface $item)
+        public function save($zoneId, CacheItem $item)
         {
-            // TODO: Implement save() method.
+            $file = $this->getFileName($zoneId, $item->getKey());
+            file_put_contents($file, serialize($item));
         }
 
-        public function saveDeferred($zoneId, CacheItemInterface $item)
+        public function saveDeferred($zoneId, CacheItem $item)
         {
             // TODO: Implement saveDeferred() method.
         }

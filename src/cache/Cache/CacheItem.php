@@ -20,16 +20,19 @@
         private $isHit;
 
 
-        public function __construct($key, $isHit)
+        public function __construct($key, $isHit=false)
         {
             $this->key = $key;
             $this->isHit = $isHit;
         }
 
-        public function isExpired() {
-            if (time () > $this->expires)
-                return true;
-            return false;
+
+        public function __getData ($prop) {
+            return $this->$prop;
+        }
+
+        public function __setData ($prop, $newValue) {
+            $this->$prop = $newValue;
         }
 
 
@@ -134,7 +137,4 @@
             return $this;
         }
 
-        public function getExpires () {
-            return $this->expires;
-        }
     }

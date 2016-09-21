@@ -29,7 +29,9 @@
         private $ttl;
         private $expireAt;
 
-        public function __construct(CacheDriver $driver, DiContainer $di, string $zoneId, $ttl, $expireAt=null)
+        private $bypass = false;
+
+        public function __construct(CacheDriver $driver, DiContainer $di, string $zoneId, $ttl=3600, $expireAt=null)
         {
             $this->mDi = $di;
             $this->driver = $driver;
@@ -38,6 +40,16 @@
             $this->expireAt = $expireAt;
         }
 
+        /**
+         * All items will be reloaded
+         *
+         * @param bool $bypass
+         * @return $this
+         */
+        public function bypass ($bypass = true) {
+            $this->bypass = $bypass;
+            return $this;
+        }
 
 
         public function __invoke(callable $fn, array $parameters=[])
@@ -77,7 +89,16 @@
          */
         public function getItem($key)
         {
-            return $this->driver->getItem($this->zoneId, $key);
+            if ($this->bypass)
+                return new CacheItem($key, true);
+
+            $item = $this->driver->getItem($this->zoneId, $key);
+            if (! $item instanceof CacheItem)
+                return new CacheItem($key, false);
+            if ($item->__getData("expires") > time())
+                return new CacheItem($key, false);
+            $item->__setData("isHit", true);
+            return $item;
         }
 
         /**
@@ -180,8 +201,16 @@
          */
         public function save(CacheItemInterface $item)
         {
+            if ( ! $item instanceof CacheItem)
+                throw new \InvalidArgumentException("save() only accepts CacheItem");
+
+            if ($item->__getData("expires") === null)
+                $item->expiresAfter($this->ttl);
+
+
 
             $this->driver->save($this->zoneId, $item);
+            return true;
         }
 
         /**
@@ -195,6 +224,8 @@
          */
         public function saveDeferred(CacheItemInterface $item)
         {
+            if ( ! $item instanceof CacheItem)
+                throw new \InvalidArgumentException("save() only accepts CacheItem");
             $this->driver->saveDeferred($this->zoneId, $item);
         }
 

@@ -9,7 +9,7 @@
     namespace gismo\Cache\Driver;
 
 
-    use Psr\Cache\CacheItemInterface;
+    use gismo\Cache\CacheItem;
 
 
     interface CacheDriver
@@ -33,10 +33,10 @@
         public function deleteItems($zoneId, array $keys);
 
 
-        public function save($zoneId, CacheItemInterface $item);
+        public function save($zoneId, CacheItem $item);
 
 
-        public function saveDeferred($zoneId, CacheItemInterface $item);
+        public function saveDeferred($zoneId, CacheItem $item);
 
 
         public function commit();

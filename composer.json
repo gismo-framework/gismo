@@ -22,8 +22,7 @@
         "html5/htmlreader": "*",
         "html5/template": "*",
         "html5/fhtml": "*",
-        "psr/cache": "~1.0",
-        "symfony/cache": "*"
+        "psr/cache": "~1.0"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +44,7 @@
             "Gismo\\Component\\Api\\": "src/api/src/Api",
             "Gismo\\Component\\Config\\": "src/config/src/Config",
             "Gismo\\Component\\ApplicationDevTools\\": "src/applicationDevTools/src/ApplicationDevTools",
-
+            "Gismo\\Component\\Cache\\": "src/cacke/src/Cache",
             "Gismo\\Component\\Annotation\\": "src/annotation/src/Annotation"
         },
         "files": [
