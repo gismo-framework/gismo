@@ -59,6 +59,7 @@
             $cacheKey = sha1(serialize([$ref->getFileName(), $ref->getStartLine(), $ref->getEndLine(), $parameters]));
 
             $item = $this->getItem($cacheKey);
+
             if ($item->isHit()) {
                 return $item->get();
             }
@@ -95,7 +96,7 @@
             $item = $this->driver->getItem($this->zoneId, $key);
             if (! $item instanceof CacheItem)
                 return new CacheItem($key, false);
-            if ($item->__getData("expires") > time())
+            if ($item->__getData("expires") < time())
                 return new CacheItem($key, false);
             $item->__setData("isHit", true);
             return $item;
