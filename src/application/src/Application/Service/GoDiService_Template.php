@@ -66,8 +66,9 @@
                     if (count($params) == 0) {
                         return $req->ROUTE_START_PATH;
                     }
+
                     if (is_string($params[0])) {
-                        $params = [0 => [0 => $params]];
+                        $params = [0  => $params];
                     }
 
                     if (substr($params[0][0], 0, 1) === "/") {
