@@ -15,7 +15,6 @@
         "php": ">=7.0",
         "symfony/yaml": "^3.1",
         "firephp/firephp-core": "*",
-        "doctrine/annotations": "*",
         "leafo/scssphp": "0.6.5",
         "oyejorge/less.php": "~1.7.0.10",
         "html5/htmlreader": "*",
