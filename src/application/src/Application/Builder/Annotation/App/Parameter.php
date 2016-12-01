@@ -12,11 +12,11 @@
     use Doctrine\Common\Annotations\Annotation\Enum;
     use Doctrine\Common\Annotations\Annotation\Required;
     use Doctrine\Common\Annotations\Annotation\Target;
-    use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Di\DiCallChain;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Phore\Annotations\Annotations;
 
     /**
      * Class Route
@@ -51,13 +51,13 @@
                 return; // Already parsed
             $builderScope["PARAMS_{$myClassName}::{$myMethodName}"] = true;
 
-            $route = GoAnnotations::ForMethod($myClassName, $myMethodName, Route::class);
+            $route = Annotations::ForMethod($myClassName, $myMethodName, Route::class);
             if ( ! $route instanceof Route)
                 throw new \InvalidArgumentException("Annotation @Parameter requires @Action.");
             $routeBindName = $route->getBindName($myClassName, $myMethodName);
 
             $params = [];
-            $annos = GoAnnotations::ForMethod($myClassName, $myMethodName);
+            $annos = Annotations::ForMethod($myClassName, $myMethodName);
             foreach ($annos as $anno) {
                 if ( ! $anno instanceof Parameter) {
                     continue;

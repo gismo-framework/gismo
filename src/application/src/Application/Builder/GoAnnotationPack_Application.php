@@ -12,7 +12,6 @@
 
 
 
-    use Gismo\Component\Annotation\GoAnnotationPack;
     use Gismo\Component\Application\Builder\Annotation\App\Action;
     use Gismo\Component\Application\Builder\Annotation\App\AllowAll;
     use Gismo\Component\Application\Builder\Annotation\App\Api;
@@ -23,8 +22,9 @@
     use Gismo\Component\Application\Builder\Annotation\App\Parameters;
     use Gismo\Component\Application\Builder\Annotation\App\Requires;
     use Gismo\Component\Application\Builder\Annotation\App\Route;
+    use Phore\Annotations\AnnotationPack;
 
-    class GoAnnotationPack_Application implements GoAnnotationPack {
+    class GoAnnotationPack_Application implements AnnotationPack {
 
 
         /**

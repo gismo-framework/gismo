@@ -7,12 +7,12 @@
      */
 
     namespace Gismo\Component\Application\Service;
-    use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoAnnotationPack_Application;
     use Gismo\Component\Application\Builder\GoApplicationClassAnnotation;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Di\DiCallChain;
+    use Phore\Annotations\Annotations;
 
 
     /**
@@ -33,7 +33,7 @@
          * @return $this
          */
         public function provideClass(string $classname) : self {
-            GoAnnotations::Require(GoAnnotationPack_Application::class);
+            Annotations::Require(GoAnnotationPack_Application::class);
 
             if (isset ($this[$classname]))
                 throw new \InvalidArgumentException("Class '$classname' already provided!");
@@ -44,7 +44,7 @@
             });
 
             $ref = new \ReflectionClass($classname);
-            $annotations = GoAnnotations::ForClass($classname);
+            $annotations = Annotations::ForClass($classname);
             $builderScope = [];
             // Register Class Annotations
             foreach ($annotations as $curAnnotation) {
@@ -60,7 +60,7 @@
             // Register Method Annotations
             foreach ($ref->getMethods(T_PUBLIC) as $refMethod) {
                 $methodName = $refMethod->getName();
-                $annotations = GoAnnotations::ForMethod($classname, $methodName);
+                $annotations = Annotations::ForMethod($classname, $methodName);
                 foreach ($annotations as $curAnnotation) {
                     if ($curAnnotation instanceof GoApplicationMethodAnnotation) {
                         try {

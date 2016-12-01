@@ -8,11 +8,11 @@
 
 
     namespace Gismo\Component\Application\Builder\Annotation\App;
-    use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
     use Gismo\Component\Application\Container\GoDeferBind;
     use Gismo\Component\Application\Container\GoRoute;
     use Gismo\Component\Application\Context;
+    use Phore\Annotations\Annotations;
 
     /**
      * Class Route
@@ -47,11 +47,11 @@
 
         private function _buildBind ($myClassName, $myMethodName) {
             $bindActionOrApi = null;
-            $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Action::class);
+            $anno = Annotations::ForMethod($myClassName, $myMethodName, Action::class);
             if ($anno instanceof Action) {
                 $bindActionOrApi = $anno->getBindName($myClassName, $myMethodName);
             }
-            $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Api::class);
+            $anno = Annotations::ForMethod($myClassName, $myMethodName, Api::class);
             if ($anno instanceof Api) {
                 $bindActionOrApi = $anno->getBindName($myClassName, $myMethodName);
                 $apiDefaultRoute = $anno->getDefaultRoute($myClassName, $myMethodName);

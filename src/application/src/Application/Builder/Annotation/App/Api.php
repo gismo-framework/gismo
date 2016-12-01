@@ -12,11 +12,11 @@
     use Doctrine\Common\Annotations\Annotation\Attributes;
     use Doctrine\Common\Annotations\Annotation\Required;
     use Doctrine\Common\Annotations\Annotation\Target;
-    use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
     use Gismo\Component\Application\Container\GoApi;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Di\DiCallChain;
+    use Phore\Annotations\Annotations;
 
     /**
      * Class Route
@@ -57,7 +57,7 @@
 
 
             // Search for a Associated Route
-            $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Route::class);
+            $anno = Annotations::ForMethod($myClassName, $myMethodName, Route::class);
             $routeBindName = null;
             if ($anno instanceof Route) {
                 $routeBindName = $anno->getBindName($myClassName, $myMethodName);

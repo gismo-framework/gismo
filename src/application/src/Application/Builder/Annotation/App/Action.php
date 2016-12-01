@@ -8,12 +8,12 @@
 
     namespace Gismo\Component\Application\Builder\Annotation\App;
     use Doctrine\Common\Annotations\Annotation\Target;
-    use Gismo\Component\Annotation\GoAnnotations;
     use Gismo\Component\Application\Builder\GoApplicationMethodAnnotation;
     use Gismo\Component\Application\Container\GoAction;
     use Gismo\Component\Application\Context;
     use Gismo\Component\Di\Core\DiCallStack;
     use Gismo\Component\Di\DiCallChain;
+    use Phore\Annotations\Annotations;
 
     /**
      * Class Route
@@ -40,7 +40,7 @@
         public function registerClass($myClassName, $myMethodName, Context $context, array &$builderScope) {
 
             // Search for a Associated Route
-            $anno = GoAnnotations::ForMethod($myClassName, $myMethodName, Route::class);
+            $anno = Annotations::ForMethod($myClassName, $myMethodName, Route::class);
             $routeBindName = null;
             if ($anno instanceof Route) {
                 $routeBindName = $anno->getBindName($myClassName, $myMethodName);
