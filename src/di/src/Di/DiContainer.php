@@ -28,8 +28,9 @@
     use Gismo\Component\PhpFoundation\Accessor\CallableAccessor;
     use Gismo\Component\PhpFoundation\Type\OrderedList;
     use Gismo\Component\PhpFoundation\Type\PrototypeMap;
+    use Phore\Di\DiCaller;
 
-    class DiContainer implements \ArrayAccess {
+    class DiContainer implements \ArrayAccess, DiCaller {
 
 
         public function __construct() {
@@ -122,8 +123,6 @@
         public function filter(callable $fn, $priority=0) : GoFilterDefinition {
             return new GoFilterDefinition($fn, $priority);
         }
-
-
 
 
         /**
