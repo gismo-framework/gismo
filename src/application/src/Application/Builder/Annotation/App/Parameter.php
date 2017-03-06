@@ -82,6 +82,9 @@
                               case "POST":
                                   $value = (string)$request->POST[$sourceName]->getValue();
                                   break;
+                              case "ROUTE":
+                                  continue;
+                                  
                               case "COOKIE":
                                   $value = (string)$request->COOKIE[$sourceName]->getValue();
                                   break;
