@@ -91,7 +91,6 @@ class GoAssetSet implements GoAssetContainer
         if (strpos($path, "..") !== false || strpos($path, "~") !== false)
             throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
 
-
         if (isset ($this->mVirtualAssets[$path])) {
             return ($this->mContext)($this->mVirtualAssets[$path][1], ["path"=>$path]);
         }
@@ -105,7 +104,7 @@ class GoAssetSet implements GoAssetContainer
             if (isset ($this->typeToRenderer[$ext]))
                 $useRenderer = $this->typeToRenderer[$ext];
         }
-
+        
         $renderer = new $useRenderer();
 
         return $renderer->getContent($this->mRootDir . "/". $path);

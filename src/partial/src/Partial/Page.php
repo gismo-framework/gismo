@@ -12,6 +12,7 @@
     use Gismo\Component\Application\Assets\GoAssetContainer;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\PhpFoundation\Helper\Mime;
     use Html5\Template\HtmlTemplate;
     use Html5\Template\Node\GoDocumentNode;
 
@@ -63,12 +64,17 @@
         {
             if (strpos($path, "..") !== false || strpos($path, "~") !== false)
                 throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
-            return file_get_contents(dirname($this->mTemplateFile) . "/" . $path);
+            $filename = dirname($this->mTemplateFile) . "/" . $path;
+            if ( ! file_exists($filename)) {
+                throw new \Exception("File not existing on local disk: $filename");
+            }
+
+            return file_get_contents($filename);
         }
 
         public function getAssetContentType(string $path = null) : string
         {
-            return mime_content_type(dirname($this->mTemplateFile) . "/" . $path);
+            return Mime::GetMimeType($path);
         }
 
         public function getAssetLinkUrl(string $path) : string

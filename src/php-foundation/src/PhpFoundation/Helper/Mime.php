@@ -122,6 +122,7 @@
                     "pfx"       => "application/x-pkcs12",
                     "pgm"       => "image/x-portable-graymap",
                     "pko"       => "application/ynd.ms-pkipko",
+                    "png"       => "image/png",
                     "pma"       => "application/x-perfmon",
                     "pmc"       => "application/x-perfmon",
                     "pml"       => "application/x-perfmon",
@@ -200,6 +201,7 @@
                     "xof"       => "x-world/x-vrml",
                     "xpm"       => "image/x-xpixmap",
                     "woff"      => "application/font-woff",
+                    "woff2"     => "font/woff2",
                     "xwd"       => "image/x-xwindowdump",
                     "z"         => "application/x-compress",
                     "zip"       => "application/zip"

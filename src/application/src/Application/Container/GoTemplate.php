@@ -13,6 +13,7 @@ use Gismo\Component\Application\Assets\GoAssetContainer;
 use Gismo\Component\Di\DiCallChain;
 use Gismo\Component\Di\DiContainer;
 use Gismo\Component\HttpFoundation\Request\Request;
+use Gismo\Component\PhpFoundation\Helper\Mime;
 use Html5\Template\HtmlTemplate;
 
 class GoTemplate extends DiCallChain implements GoAssetContainer
@@ -49,7 +50,8 @@ class GoTemplate extends DiCallChain implements GoAssetContainer
 
     public function getAssetContentType(string $path = null) : string
     {
-        return mime_content_type(dirname($this->mTemplateFile) . "/" . $path);
+
+        return Mime::GetMimeType($path);
     }
 
     public function getAssetLinkUrl(string $path) : string
