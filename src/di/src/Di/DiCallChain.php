@@ -32,6 +32,8 @@
          */
         private $outputFilter;
 
+        private $lastOffset = 0;
+
         public function __construct(DiContainer $di, bool $filterOnly = false)
         {
             $this->mDi = $di;
@@ -109,6 +111,8 @@
 
         public function offsetSet($offset, $value)
         {
+            if ($offset === null)
+                $offset = $this->lastOffset++;
             if ($offset === 0) {
                 if ($this->filterOnly === true)
                     throw new \InvalidArgumentException("Filter only: Cannot assign callback");

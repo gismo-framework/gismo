@@ -29,14 +29,14 @@
 
 
         /**
-         * @var GoRouteDefinition|null
+         * @var string|null
          */
         private $mRoute;
 
 
 
 
-        public function __construct(DiContainer $di, GoRouteDefinition $route=null) {
+        public function __construct(DiContainer $di, $route=null) {
             parent::__construct($di);
             $this->mRoute = $route;
         }
@@ -59,11 +59,10 @@
 
 
 
-        public function dispatch(RouterRequest $request) {
+        public function dispatch(RouterRequest $request, array $params) {
             if ($this->mRoute === null)
                 throw new \InvalidArgumentException("Action has no route assigned. Use call() instead of dispatch() for direct calling");
 
-            $params = $this->mRoute->buildParams($request);
             $output = $this->__invoke($params);
         }
 

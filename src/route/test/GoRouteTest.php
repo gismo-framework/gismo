@@ -9,22 +9,30 @@
     namespace Gismo\Test\Component\Route;
 
 
+    use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
+    use Gismo\Component\Route\GoAction;
     use Gismo\Component\Route\Route\GoRouteDefinition;
+    use Gismo\Component\Route\Route\GoRouter;
     use Gismo\Component\Route\Type\RouterRequest;
 
     class GoRouteTest extends \PHPUnit_Framework_TestCase {
 
 
 
-        public function testBuildParams () {
-            $route = new GoRouteDefinition("/static/:name1/:name2/::name3");
+        public function testEmptyRoute () {
+            $router = new GoRouter($di = new DiContainer());
 
-            self::assertEquals(
-                    ["name1" => "val1", "name2" => "val2", "name3" => ["val3", "val4"]],
-                    $route->buildParams(new RouterRequest(["static", "val1", "val2", "val3", "val4"], "/"))
-            );
-
+            $action = new GoAction($di, "/");
+            $action[] = function ($someName) {
+                echo "Wurst" . $someName;
+            };
+            
+            
+            $router->add("::someName", $action);
+            $router->add("static/::someName", $action);
+            
+            $router->dispatch(new RouterRequest(["a", "b"]));
 
         }
     }

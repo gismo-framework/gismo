@@ -16,8 +16,9 @@
     class RouterRequest {
 
 
-        public function __construct(array $route, string $method="GET") {
-            $this->route = $route;
+        public function __construct(array $routeArray, string $method="GET") {
+            $this->routeArray = $routeArray;
+            $this->route = implode("/", $routeArray);
             $this->method = $method;
         }
 
@@ -26,6 +27,13 @@
          * Route path array
          *
          * @var string[]
+         */
+        public $routeArray;
+
+        /**
+         * Route String
+         *
+         * @var string
          */
         public $route;
 

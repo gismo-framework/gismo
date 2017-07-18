@@ -16,6 +16,7 @@
     use Gismo\Component\Route\Node\GoRouteNode;
     use Gismo\Component\Route\Route\GoRouteDefinition;
     use Gismo\Component\Route\Route\GoRouteContainer;
+    use Gismo\Component\Route\Route\GoRouter;
     use Gismo\Component\Route\Type\RouterRequest;
 
     class GoDiService_Route_Property {
@@ -28,13 +29,13 @@
         private $di;
 
         /**
-         * @var GoRouteContainer
+         * @var GoRouter
          */
-        private $container;
+        private $router;
 
         public function __construct(DiContainer $container) {
             $this->di = $container;
-            $this->container = new GoRouteContainer();
+            $this->router = new GoRouter($this);
         }
 
 
@@ -49,24 +50,19 @@
         }
         
         
-        public function add($route, callable $cb, $bind=null) : GoAction {
+        public function add(string $route, callable $cb, $bind=null) : GoAction {
             $route = $this->mountedRoutePrefix . $route;
-            $routeObj = new GoRouteDefinition($route);
 
-            $action = new GoAction($this->di, $routeObj);
+            $action = new GoAction($this->di, $route);
             $action[0] = $cb;
 
-            $this->container->add($routeObj, $action);
+            $this->router->add($route, $action);
             return $action;
         }
 
 
         public function dispatch (RouterRequest $request) {
-
-            $action = $this->container->findBestAction($request);
-            if ($action === null)
-                throw new NoRouteDefinedException(["No route defined for ?", (string)$request]);
-            $action->dispatch($request);
+            $this->router->dispatch($request);
         }
 
     }
