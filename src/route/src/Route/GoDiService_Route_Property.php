@@ -35,7 +35,7 @@
 
         public function __construct(DiContainer $container) {
             $this->di = $container;
-            $this->router = new GoRouter($this);
+            $this->router = new GoRouter($container);
         }
 
 

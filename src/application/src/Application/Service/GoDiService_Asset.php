@@ -34,7 +34,8 @@
                 return new Cache(new NoCacheDriver(), $this, "cache.frontend.asset", 0);
             });
 
-            $this->route->add("/assets/::path", function (array $path) {
+            $this->route->add("assets/::path", function ($path) {
+                $path = explode("/", $path);
                 $forTemplate = array_shift($path);
                 $tpl = $this[$forTemplate];
                 if ( ! $tpl instanceof GoAssetContainer)
