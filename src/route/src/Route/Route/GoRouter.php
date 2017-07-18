@@ -28,15 +28,58 @@
          */
         private $container;
 
+
+        private $routes = [
+            "GET" => [],
+            "POST" => [],
+            "PUT"   => [],
+            "DELETE" => [],
+            "HEADER" => [],
+            "*" => []
+        ];
+
+
         public function __construct(DiContainer $container) {
             $this->di = $container;
             $this->container = new GoRouteContainer();
         }
 
 
-        public function add(GoAction $action) : GoAction {
+        private function _extractMethod (string &$in) {
+            if (strpos($in, "@") === null)
+                return "*";
+            $method = substr($in, 0, strpos($in, "@"));
+            $in = substr($in, strpos($in, "@")+1);
+            return $method;
+        }
+        
+        private function _routeToPreg ($in) {
+            $in = preg_replace("|\\:\\:([a-zA-Z0-9\\_]+)|", '(?<$1>.*)', $in);
+            $in = preg_replace("|\\:([a-zA-Z0-9\\_]+)|", '(?<$1>[^/])', $in);
+            return $in;
+        }
 
-            $this->container->add($action, $action);
+        private function _routeToWeight (string $in) : int {
+            // Replace Variables with Empty Space and count words
+            return substr_count($in, "/");
+        }
+
+
+        public function addPreg (string $regex, int $weight, GoAction $action, $method="*") : GoAction {
+            if ( ! isset ($this->routes[$method]))
+                throw new \Exception("Invalid Method '$method' in RegEx-Route '$regex'");
+            $this->routes[$method][] = [$weight, $regex, $action];
+            return $action;
+        }
+
+
+        public function add($route, GoAction $action, $weight=null) : GoAction {
+            $method = $this->_extractMethod($route);
+            
+            if ($weight === null)
+                $weight = $this->_routeToWeight($route);
+            
+            $this->addPreg($this->_routeToPreg($route), $weight, $action, $method);
             return $action;
         }
 
