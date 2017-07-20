@@ -43,7 +43,12 @@
 
                     return $this[$name]($params);
                 });
+                $p->getDirective(GoNsCallDirective::class)->setCallback(function ($name, $params) {
+                    if (! is_array($params))
+                        $params = [];
 
+                    return $this[$name]($params);
+                });
                 $p->getDirective(GoExtendsDirective::class)->setExtendsCallback(function ($name, $params) {
                     return $this[$name]($params);
                 });

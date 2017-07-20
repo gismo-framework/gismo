@@ -17,8 +17,7 @@
         "firephp/firephp-core": "*",
         "leafo/scssphp": "0.6.5",
         "oyejorge/less.php": "~1.7.0.10",
-        "html5/htmlreader": "*",
-        "html5/template": "*",
+        "html5/template": "^1.1",
         "html5/fhtml": "*",
         "psr/cache": "~1.0",
         "phore/annotations": "*",
@@ -50,10 +49,5 @@
             "/test/"
         ]
     },
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1-dev"
-        }
-    }
+    "minimum-stability": "dev"
 }
