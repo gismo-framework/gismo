@@ -22,6 +22,7 @@
     use Gismo\Component\Partial\Page;
     use Html5\Template\Directive\GoCallDirective;
     use Html5\Template\Directive\GoExtendsDirective;
+    use Html5\Template\Directive\GoNsCallDirective;
     use Html5\Template\HtmlTemplate;
 
     trait GoDiService_Template
