@@ -10,6 +10,7 @@ namespace Gismo\Component\Application\Container;
 
 
 use Gismo\Component\Application\Assets\GoAssetContainer;
+use Gismo\Component\Application\Assets\GoAssetContainerTrait;
 use Gismo\Component\Di\DiCallChain;
 use Gismo\Component\Di\DiContainer;
 use Gismo\Component\HttpFoundation\Request\Request;
@@ -18,7 +19,8 @@ use Html5\Template\HtmlTemplate;
 
 class GoTemplate extends DiCallChain implements GoAssetContainer
 {
-
+    use GoAssetContainerTrait;
+    
     protected $mTemplateFile;
     protected $bindName;
 
@@ -27,6 +29,9 @@ class GoTemplate extends DiCallChain implements GoAssetContainer
         parent::__construct($di, false);
         $this->mTemplateFile = $filename;
         $this->bindName = $bindName;
+
+        $this->__di_set_bindname($bindName);
+        $this->__asset_container_init($di, dirname($filename));
 
         $this[0] = function ($§§parameters, HtmlTemplate $parser) {
 
@@ -38,26 +43,5 @@ class GoTemplate extends DiCallChain implements GoAssetContainer
         };
     }
 
-
-
-
-    public function getAssetContent(string $path) : string
-    {
-        if (strpos($path, "..") !== false || strpos($path, "~") !== false)
-            throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
-        return file_get_contents(dirname($this->mTemplateFile) . "/" . $path);
-    }
-
-    public function getAssetContentType(string $path = null) : string
-    {
-
-        return Mime::GetMimeType($path);
-    }
-
-    public function getAssetLinkUrl(string $path) : string
-    {
-        $req = $this->mDi[Request::class];
-        /* @var $req Request */
-        return $req->ROUTE_START_PATH . "/assets/{$this->bindName}/$path?av={$this->mDi->assetRevision}";
-    }
+    
 }

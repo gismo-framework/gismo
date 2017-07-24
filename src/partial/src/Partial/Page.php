@@ -10,6 +10,7 @@
 
 
     use Gismo\Component\Application\Assets\GoAssetContainer;
+    use Gismo\Component\Application\Assets\GoAssetContainerTrait;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
     use Gismo\Component\PhpFoundation\Helper\Mime;
@@ -18,21 +19,21 @@
 
     class Page extends Partial implements GoAssetContainer {
 
+        use GoAssetContainerTrait;
+        
         private $mTemplateFile;
 
-        private $mBindName;
 
         public function __construct(DiContainer $di)
         {
             parent::__construct($di, false);
         }
 
-        public function __di_set_bindname(string $name) {
-            $this->mBindName = $name;
-        }
+       
 
         public function setTemplate($filename) {
             $this->mTemplateFile = $filename;
+            $this->__asset_container_init($this->mDi, dirname($filename));
         }
 
 
@@ -59,28 +60,5 @@
             }
             return $this->mParsedTemplate->run($params);
         }
-
-        public function getAssetContent(string $path) : string
-        {
-            if (strpos($path, "..") !== false || strpos($path, "~") !== false)
-                throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
-            $filename = dirname($this->mTemplateFile) . "/" . $path;
-            if ( ! file_exists($filename)) {
-                throw new \Exception("File not existing on local disk: $filename");
-            }
-
-            return file_get_contents($filename);
-        }
-
-        public function getAssetContentType(string $path = null) : string
-        {
-            return Mime::GetMimeType($path);
-        }
-
-        public function getAssetLinkUrl(string $path) : string
-        {
-            $req = $this->mDi[Request::class];
-            /* @var $req Request */
-            return $req->ROUTE_START_PATH . "/assets/{$this->mBindName}/$path?av={$this->mDi->assetRevision}";
-        }
+        
     }

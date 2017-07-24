@@ -11,9 +11,7 @@
 
     interface GoAssetContainer {
 
-        public function getAssetContent(string $path) : string;
-
-        public function getAssetContentType(string $path=null) : string;
+        public function getAssetContent(string $path, &$contentType) : string;
 
         public function getAssetLinkUrl (string $path) : string;
 

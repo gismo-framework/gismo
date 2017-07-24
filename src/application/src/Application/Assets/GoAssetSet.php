@@ -18,9 +18,9 @@ use Gismo\Component\HttpFoundation\Request\Request;
 
 class GoAssetSet implements GoAssetContainer
 {
-
+    use GoAssetContainerTrait;
+    
     private $mRootDir;
-    private $mBindName;
 
     /**
      * @var Context
@@ -44,12 +44,7 @@ class GoAssetSet implements GoAssetContainer
         $this->mContext = $context;
         $this->mRootDir = $rootDir;
     }
-
-
-    public function __di_set_bindname(string $bindName) {
-        $this->mBindName = $bindName;
-    }
-
+    
 
     /**
      * @param string|string[] $filter
@@ -72,11 +67,7 @@ class GoAssetSet implements GoAssetContainer
         return $files;
     }
 
-    public function getAssetLinkUrl(string $path) : string {
-        $req = $this->mContext[Request::class];
-        /* @var $req Request */
-        return $req->ROUTE_START_PATH . "/assets/{$this->mBindName}/$path?av={$this->mContext->assetRevision}";
-    }
+    
 
     private $mVirtualAssets = [];
 
@@ -87,7 +78,7 @@ class GoAssetSet implements GoAssetContainer
     }
 
 
-    public function getAssetContent(string $path) : string {
+    public function getAssetContent(string $path, &$contentType) : string {
         if (strpos($path, "..") !== false || strpos($path, "~") !== false)
             throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
 
@@ -107,27 +98,8 @@ class GoAssetSet implements GoAssetContainer
         
         $renderer = new $useRenderer();
 
+        $contentType = $renderer->getContentType($path);
         return $renderer->getContent($this->mRootDir . "/". $path);
     }
-
-    public function getAssetContentType(string $path = null) : string
-    {
-        if (strpos($path, "..") !== false || strpos($path, "~") !== false)
-            throw new \InvalidArgumentException("Invalid path: '$path'. Security violation was reported.");
-
-        if (isset ($this->mVirtualAssets[$path])) {
-            return $this->mVirtualAssets[$path][0];
-        }
-
-        $useRenderer = GoMimeAssetTenderer::class;
-        if (preg_match("/(\\.[a-z]+)$/", $path, $matches)) {
-            $ext = $matches[1];
-            if (isset ($this->typeToRenderer[$ext]))
-                $useRenderer = $this->typeToRenderer[$ext];
-        }
-
-        $renderer = new $useRenderer();
-
-        return $renderer->getContentType($path);
-    }
+    
 }

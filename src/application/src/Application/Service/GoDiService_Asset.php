@@ -50,9 +50,10 @@
                 $subPath = implode ("/", $path);
 
                 $assetData = $cache(function () use ($tpl, $subPath) {
+                    $content = $tpl->getAssetContent($subPath, $contentType);
                     return [
-                        0 => $tpl->getAssetContentType($subPath),
-                        1 => $tpl->getAssetContent($subPath)
+                        0 => $contentType,
+                        1 => $content
 
                     ];
                 } , ["path" => $path]);

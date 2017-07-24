@@ -98,13 +98,10 @@ class GoAssetSetList implements \ArrayAccess, GoAssetContainer
         return new \InvalidArgumentException("offsetExists() not available on GoAssetSetList");
     }
 
-    public function getAssetContent(string $path) : string
+    public function getAssetContent(string $path, &$contentType) : string
     {
+        $contentType = $this->assetHandler->getContentType($this);
         return $this->assetHandler->getCombinedContent($this);
     }
-
-    public function getAssetContentType(string $path=null) : string
-    {
-        return $this->assetHandler->getContentType($this);
-    }
+    
 }
