@@ -73,7 +73,7 @@
             $data["ROUTE_START_PATH"] = $scriptPath;
             $data["ROUTE_START_URL"] = $requestHostAndScheme . $scriptPath;
 
-            if ( ! strpos($server["REQUEST_URI"], $scriptPath) === 0)
+            if ( $scriptPath !== "" && ! strpos($server["REQUEST_URI"], $scriptPath) === 0)
                 throw new \InvalidArgumentException("Invalid RequestUri: '{$server['REQUEST_URI']}'. Must start with Script Path: '$scriptPath'");
 
 
