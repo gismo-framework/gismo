@@ -13,6 +13,7 @@
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\HttpFoundation\Request\Request;
     use Gismo\Component\PhpFoundation\Helper\Mime;
+    use Gismo\Component\PhpFoundation\Helper\PathHelper;
 
     trait GoAssetContainerTrait {
 
@@ -41,7 +42,7 @@
         public function getAssetLinkUrl(string $path) : string {
             $req = $this->mContext[Request::class];
             /* @var $req Request */
-            return $req->ROUTE_START_PATH . "/assets/{$this->mBindName}/$path?av={$this->mContext->assetRevision}";
+            return PathHelper::Absolute($req->ROUTE_START_PATH . "/assets/{$this->mBindName}/$path?av={$this->mContext->assetRevision}");
         }
 
         public function getAssetContent(string $path, &$contentType) : string {

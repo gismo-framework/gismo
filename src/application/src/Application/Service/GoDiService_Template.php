@@ -20,6 +20,7 @@
     use Gismo\Component\Partial\HtmlPartial;
     use Gismo\Component\Partial\NaviTree;
     use Gismo\Component\Partial\Page;
+    use Gismo\Component\PhpFoundation\Helper\PathHelper;
     use Html5\Template\Directive\GoCallDirective;
     use Html5\Template\Directive\GoExtendsDirective;
     use Html5\Template\Directive\GoNsCallDirective;
