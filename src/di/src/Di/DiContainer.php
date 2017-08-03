@@ -66,6 +66,10 @@
          */
         private $diProvider;
 
+        /**
+         * @var DiSection[]
+         */
+        private $diDefinedSections = [];
 
         /**
          * A service is called only once, when the
@@ -171,6 +175,56 @@
             return new $className(...$paramValues);
         }
 
+
+        /**
+         * Define a section in di-context
+         *
+         * <example>
+         * $di->define("tpl",
+         *   function (string $section, $data, $opt) {
+         *
+         *   }
+         * , function () {
+         *   ..Will be called whenever something is added under $di["tpl.xyz"]
+         * })
+         * </example>
+         *
+         *
+         * @param string        $section
+         * @param callable|null $configParser
+         * @param callable|null $validator
+         *
+         * @return DiContainer
+         */
+        public function addSection(DiSection $section) : self {
+            if (strpos($section->getSectionName(), ".") !== false)
+                throw new \InvalidArgumentException("Invalid section '{$section->getSectionName()}': Only global sections can be defined. (You cannot define subsections)");
+            $this->diDefinedSections[$section->getSectionName()] = $section;
+            return $this;
+        }
+
+
+        /**
+         * Try to parse the di-configuration from the config-array
+         *
+         * @param            $diConfig
+         * @param array|null $opt
+         *
+         * @return DiContainer
+         */
+        public function load(array $diConfig, array $opt = null) : self {
+
+            foreach ($diConfig as $section => $config) {
+                $mainSection = $section;
+                if ( ($pos = strpos($mainSection, ".") ) !== false)
+                    $mainSection = substr($mainSection, 0, $pos);
+                if ( ! isset ($this->diDefinedSections[$mainSection]))
+                    throw new \InvalidArgumentException("No section-parser defined for section '$mainSection' when parsing '$section'");
+                $this->diDefinedSections[$mainSection]->parse($section, $config, $opt, $this);
+            }
+
+            return $this;
+        }
 
 
         private function getFactoryKeyForSettaGetta($varName) {

@@ -258,3 +258,9 @@ if ($ret === false) {
 }
 
 ```
+
+
+### Parsing Config-Files
+
+You can define individual sections with `$di->addSection()`.
+You can parse the configuration with `$di->load()`
