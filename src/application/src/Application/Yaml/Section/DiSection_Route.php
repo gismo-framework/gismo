@@ -39,8 +39,6 @@ class DiSection_Route implements DiSection
      * @return mixed
      */
     public function parse(string $sectionName, $data, $opt, DiContainer $container, GoDiFile $curFile) {
-        if ( ! is_string($data))
-            throw new \InvalidArgumentException("bind accepts only one string argument.");
         if ( ! $container instanceof Context)
             throw new \InvalidArgumentException("Tpl parser requires container to be Context");
 
