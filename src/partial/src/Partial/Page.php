@@ -31,7 +31,7 @@
 
        
 
-        public function setTemplate($filename) {
+        public function setTemplate(string $filename) {
             $this->mTemplateFile = $filename;
             $this->__asset_container_init($this->mDi, dirname($filename));
         }

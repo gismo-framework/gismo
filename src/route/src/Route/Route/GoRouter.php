@@ -69,7 +69,11 @@
 
         public function add($route, GoAction $action, $weight=null) : GoAction {
             $method = $this->_extractMethod($route);
-            
+
+            if (substr($route, 0, 1) !== "/")
+                throw new \InvalidArgumentException("Route must start with '/'. Found: '$route'");
+            $route = substr ($route, 1);
+
             if ($weight === null)
                 $weight = $this->_routeToWeight($route);
             

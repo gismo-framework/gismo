@@ -45,4 +45,10 @@ class GoDiFile
         return new self($uri);
     }
 
+
+    public function __toString()
+    {
+        return (string)$this->mFile;
+    }
+
 }
