@@ -21,7 +21,8 @@
         "html5/fhtml": "*",
         "psr/cache": "~1.0",
         "phore/annotations": "*",
-        "phore/di-base": "*"
+        "phore/di-base": "*",
+        "phore/file": "*"
     },
     "autoload": {
         "psr-4": {

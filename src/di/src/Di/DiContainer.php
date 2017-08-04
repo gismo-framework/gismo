@@ -12,6 +12,7 @@
 
 
 
+    use Gismo\Component\Di\Bindables\GoDiFile;
     use Gismo\Component\Di\Core\Invokeable;
     use Gismo\Component\Di\Type\DiClosureFactory;
     use Gismo\Component\Di\Type\DiFactory;
@@ -212,7 +213,7 @@
          *
          * @return DiContainer
          */
-        public function load(array $diConfig, array $opt = null) : self {
+        public function load(array $diConfig, array $opt = null, GoDiFile $file) : self {
 
             foreach ($diConfig as $section => $config) {
                 $mainSection = $section;
@@ -220,7 +221,7 @@
                     $mainSection = substr($mainSection, 0, $pos);
                 if ( ! isset ($this->diDefinedSections[$mainSection]))
                     throw new \InvalidArgumentException("No section-parser defined for section '$mainSection' when parsing '$section'");
-                $this->diDefinedSections[$mainSection]->parse($section, $config, $opt, $this);
+                $this->diDefinedSections[$mainSection]->parse($section, $config, $opt, $this, $file);
             }
 
             return $this;

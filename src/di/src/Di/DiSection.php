@@ -9,6 +9,8 @@
 namespace Gismo\Component\Di;
 
 
+use Gismo\Component\Di\Bindables\GoDiFile;
+
 interface DiSection
 {
 
@@ -29,7 +31,7 @@ interface DiSection
      *
      * @return mixed
      */
-    public function parse (string $sectionName, $data, $opt, DiContainer $container);
+    public function parse (string $sectionName, $data, $opt, DiContainer $container, GoDiFile $curFile);
 
     public function validate (string $sectionName, $value);
 }
