@@ -24,16 +24,14 @@
          */
         private $mContext;
 
-        public function __construct(AppConfig $config, $filenamePlugins) {
+        public function __construct(AppConfig $config) {
             $debug = false;
             if ($config->ENVIRONMENT === "DEVELOPMENT")
                 $debug = true;
             $this->mContext = $c = new FrontendContext(true);
             $c->loadYaml(__DIR__ . "/../../frontend.yml");
-
-            $pluginLoader = new JsonFilePluginLoader($this->mContext);
-            $pluginLoader->initPluginsFromFile($filenamePlugins);
-
+            $plugin = new BasePlugin();
+            $plugin->onContextInit($c);
         }
 
 

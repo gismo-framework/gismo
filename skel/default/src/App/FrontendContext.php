@@ -6,14 +6,10 @@
      * Time: 10:58
      */
 
-    namespace Golafix\App;
+    namespace YourProject\App;
 
 
     use Gismo\Component\Application\Context;
 
     class FrontendContext extends Context {
-
-        
-        
-        
     }

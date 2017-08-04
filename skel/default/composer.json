@@ -1,34 +1,18 @@
 {
-    "name": "golafix/engine",
-    "type": "library",
-    "description": "Golafix engine",
-    "keywords": ["Golafix", "framework", "php"],
-    "homepage": "http://golafix.com",
-    "license": "Proprietary",
-    "authors": [
-        {
-            "name": "Matthias Leuffen",
-            "email": "matthes@leuffen.de"
-        }
-    ],
-
+    "name": "undefined/undefined",
+    "type": "project",
+    "description": "Golafix skeleton project",
 
     "require": {
         "php": ">=7.0",
-        "ext-curl": "*",
-        "ext-zip": "*",
-        "ext-zlib": "*",
-        "gismo/gismo": "*",
-        "yaml/eyaml": "^1.2",
-        "joomla/github": "*",
-        "curl/curl": "^1.6"
+        "gismo/gismo": "*"
     },
     "require-dev": {
         "nette/tester": "^1.7"
     },
     "autoload": {
         "psr-4": {
-            "Golafix\\": "src/"
+            "YourProject\\": "src/"
         }
     },
     "minimum-stability": "dev"

@@ -1,0 +1,4 @@
+bind: "yml.frontend"
+
+route:
+  "/": "@tpl/tpl.empty.html"

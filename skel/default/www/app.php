@@ -7,18 +7,17 @@
  */
 
     namespace App;
-    ini_set("display_errors", 1);
-
-    use C7\Layout\Base\Mock\LayoutTestApp;
     use Gismo\Component\Config\AppConfig;
     use Gismo\Component\Config\ConfigLoader;
     use Gismo\Component\HttpFoundation\Request\RequestFactory;
     use Gismo\Component\PhpFoundation\Helper\ErrorHandler;
-    use Golafix\App\BaseApp;
-    use Golafix\App\GolafixApp;
-    use Leuffen\CV\CvApp;
+    use YourProject\App\YourApp;
 
-    require "../src/bootstrap.php";
+    ini_set("display_errors", 1);
+
+
+
+    require __DIR__ . "/../vendor/autoload.php";
 
     // Aktivieren der Html-Sauberen Exception Darstellung
     ErrorHandler::UseHttpErrorHandler();
@@ -33,6 +32,5 @@
     $request = RequestFactory::BuildFromEnv($config);
 
     // App Laden und ausführen.
-    $app = new GolafixApp($config,  "plugins.json");
-    $app->setGolafixYmlFile(GOLAFIX_YAML_FILE);
+    $app = new YourApp($config);
     $app->run($request);
