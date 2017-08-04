@@ -13,11 +13,17 @@
     use Gismo\Component\PhpFoundation\Helper\ErrorHandler;
     use YourProject\App\YourApp;
 
+
+
+    define("GISMO_BOOTSTRAP_FILE", __DIR__ . "/../vendor/autoload.php");
+
     ini_set("display_errors", 1);
 
+    if ( ! file_exists(GISMO_BOOTSTRAP_FILE))
+        throw new \Exception("Bootstrap file missing. Please ensure to run 'composer update'.");
 
 
-    require __DIR__ . "/../vendor/autoload.php";
+    require GISMO_BOOTSTRAP_FILE;
 
     // Aktivieren der Html-Sauberen Exception Darstellung
     ErrorHandler::UseHttpErrorHandler();
