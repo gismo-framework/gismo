@@ -23,7 +23,7 @@
         private function __di_init_service_devtools() {
             $sw = new StopWatch();
 
-            $this->route->add("dev/status", function (Context $context) use ($sw) {
+            $this->route->add("/dev/status", function (Context $context) use ($sw) {
                 $timing = [];
                 $timing["[Time to routing call]"] = number_format($sw->lap(), 4);
                 $varVisualizer = new GoVarVisualizer();

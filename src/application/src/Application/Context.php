@@ -54,7 +54,7 @@
 
         public function loadYaml(string $filename) {
             $file = YamlFile::Load($filename);
-            $this->load($file->getData(), $file);
+            $this->load($file->getData(), [], $file);
         }
 
 
