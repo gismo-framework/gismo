@@ -17,6 +17,10 @@
     use Gismo\Component\Application\Service\GoDiService_Event;
     use Gismo\Component\Application\Service\GoDiService_Partial;
     use Gismo\Component\Application\Service\GoDiService_Template;
+    use Gismo\Component\Application\Yaml\Section\DiSection_Bind;
+    use Gismo\Component\Application\Yaml\Section\DiSection_Const;
+    use Gismo\Component\Application\Yaml\Section\DiSection_Route;
+    use Gismo\Component\Application\Yaml\Section\DiSection_Tpl;
     use Gismo\Component\Application\Yaml\YamlFile;
     use Gismo\Component\Di\DiContainer;
     use Gismo\Component\Route\GoDiService_Route;
@@ -38,7 +42,14 @@
             parent::__construct();
             $this->debug = $this->constant($debug)->protect("Debug value is set in Context and cannot be changed.");
             $this->assetRevision = $this->constant($assetRevision)->protect("Asset revision ist set in Context and cannot be changed.");
+
+            $this->addSection(new DiSection_Bind());
+            $this->addSection(new DiSection_Const());
+            $this->addSection(new DiSection_Tpl());
+            $this->addSection(new DiSection_Route());
         }
+
+
 
 
         public function loadYaml(string $filename) {
