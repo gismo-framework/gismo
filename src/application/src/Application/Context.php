@@ -20,6 +20,7 @@
     use Gismo\Component\Application\Yaml\Section\DiSection_Bind;
     use Gismo\Component\Application\Yaml\Section\DiSection_Const;
     use Gismo\Component\Application\Yaml\Section\DiSection_Extends;
+    use Gismo\Component\Application\Yaml\Section\DiSection_Plugins;
     use Gismo\Component\Application\Yaml\Section\DiSection_Route;
     use Gismo\Component\Application\Yaml\Section\DiSection_Tpl;
     use Gismo\Component\Application\Yaml\YamlFile;
@@ -45,6 +46,7 @@
             $this->assetRevision = $this->constant($assetRevision)->protect("Asset revision ist set in Context and cannot be changed.");
 
             $this->addSection(new DiSection_Extends());
+            $this->addSection(new DiSection_Plugins());
             $this->addSection(new DiSection_Bind());
             $this->addSection(new DiSection_Const());
             $this->addSection(new DiSection_Tpl());
