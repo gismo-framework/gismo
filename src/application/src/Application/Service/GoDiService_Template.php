@@ -48,8 +48,10 @@
                 $p->getDirective(GoNsCallDirective::class)->setCallback(function ($name, $params) {
                     if (! is_array($params))
                         $params = [];
-
-                    return $this[$name]($params);
+                    $data = $this[$name];
+                    if (is_callable($data))
+                        return $data($params);
+                    return $data;
                 });
                 $p->getDirective(GoExtendsDirective::class)->setExtendsCallback(function ($name, $params) {
                     return $this[$name]($params);
