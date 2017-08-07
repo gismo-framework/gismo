@@ -49,7 +49,7 @@ class DiSection_Route implements DiSection
                     $page->setTemplate($curFile->xpath(substr($what, 1)));
                     echo $page($params);
                 } else {
-                    $container[$what]();
+                    echo $container[$what]();
                 }
             });
         }
