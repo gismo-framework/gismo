@@ -80,6 +80,10 @@
                         $params = [0  => $params];
                     }
 
+                    if (substr($params[0][0], 0, 1) === "#") {
+                        return $params[0][0]; // Anchor-Links
+                    }
+
                     if (substr($params[0][0], 0, 1) === "/") {
                         // Normale Route
                         $params[0][0] = substr($params[0][0], 1); // strip "/"

@@ -41,7 +41,14 @@ class DiSection_Const implements DiSection
         if ( ! $container instanceof Context)
             throw new \InvalidArgumentException("Tpl parser requires container to be Context");
 
-        $container[$sectionName] = $container->constant($data);
+        $val = $data;
+        if (isset ($container[$sectionName])) {
+            $val = $container[$sectionName];
+            $val = array_merge($val, $data);
+            unset ($container[$sectionName]);
+        }
+
+        $container[$sectionName] = $container->constant($val);
         return true;
     }
 
