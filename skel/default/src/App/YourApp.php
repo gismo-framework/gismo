@@ -35,6 +35,13 @@
         }
 
 
+        public function runCmd () {
+            $context = new CmdContext();
+            $context->import($this->mContext);
+
+            
+        }
+
         public function run(Request $request) {
             $p = $this->mContext;
             $p[Request::class] = $p->constant($request);
