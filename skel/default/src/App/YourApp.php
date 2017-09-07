@@ -37,8 +37,7 @@
 
 
         public function runCmd (array $mockParams=null) {
-            $context = new CmdContext();
-            $context->import($this->mContext);
+            $context = $this->mContext;
 
             $ctrl = $context["cli.controller"];
             if ( ! $ctrl instanceof CliController)
