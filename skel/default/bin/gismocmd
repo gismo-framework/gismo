@@ -4,4 +4,4 @@
 
 require __DIR__ . "/../src/bootstrap.inc.php";
 
-AppLauncher::Get()->getApp()->runCmd();
+\Gismo\Component\Plugin\AppLauncher::Get()->getApp()->runCmd();
