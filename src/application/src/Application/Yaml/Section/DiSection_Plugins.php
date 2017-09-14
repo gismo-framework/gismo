@@ -13,8 +13,11 @@ use Gismo\Component\Application\Context;
 use Gismo\Component\Di\Bindables\GoDiFile;
 use Gismo\Component\Di\DiContainer;
 use Gismo\Component\Di\DiSection;
+use Gismo\Component\Partial\Page;
+use Gismo\Component\Plugin\Plugin;
+use MongoDB\Exception\InvalidArgumentException;
 
-class DiSection_Const implements DiSection
+class DiSection_Plugins implements DiSection
 {
 
     /**
@@ -24,7 +27,7 @@ class DiSection_Const implements DiSection
      */
     public function getSectionName(): string
     {
-        return "const";
+        return "plugins";
     }
 
     /**
@@ -41,14 +44,15 @@ class DiSection_Const implements DiSection
         if ( ! $container instanceof Context)
             throw new \InvalidArgumentException("Tpl parser requires container to be Context");
 
-        $val = $data;
-        if (isset ($container[$sectionName])) {
-            $val = $container[$sectionName];
-            $val = array_merge($val, $data);
-            unset ($container[$sectionName]);
+        foreach ($data as $class) {
+            if ( ! class_exists($class))
+                throw new InvalidArgumentException("Loading plugins: Class '$class' does not exist in '$curFile'");
+            $plugin = new $class();
+            if ( ! $plugin instanceof Plugin)
+                throw new InvalidArgumentException("Plugin class '$class' must implement Plugin");
+            $plugin->onContextInit($container);
         }
 
-        $container[$sectionName] = $container->constant($val);
         return true;
     }
 

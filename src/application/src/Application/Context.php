@@ -13,6 +13,7 @@
     use Gismo\Component\Application\Service\GoDiService_Api;
     use Gismo\Component\Application\Service\GoDiService_App;
     use Gismo\Component\Application\Service\GoDiService_Asset;
+    use Gismo\Component\Application\Service\GoDiService_Cli;
     use Gismo\Component\Application\Service\GoDiService_DevTools;
     use Gismo\Component\Application\Service\GoDiService_Event;
     use Gismo\Component\Application\Service\GoDiService_Partial;
@@ -20,6 +21,7 @@
     use Gismo\Component\Application\Yaml\Section\DiSection_Bind;
     use Gismo\Component\Application\Yaml\Section\DiSection_Const;
     use Gismo\Component\Application\Yaml\Section\DiSection_Extends;
+    use Gismo\Component\Application\Yaml\Section\DiSection_Plugins;
     use Gismo\Component\Application\Yaml\Section\DiSection_Route;
     use Gismo\Component\Application\Yaml\Section\DiSection_Tpl;
     use Gismo\Component\Application\Yaml\YamlFile;
@@ -35,7 +37,7 @@
      */
     class Context extends DiContainer {
         use GoDiService_Route, GoDiService_Template, GoDiService_Asset, GoDiService_Api, GoDiService_App, GoDiService_DevTools,
-            GoDiService_Event;
+            GoDiService_Event, GoDiService_Cli;
         
 
         public function __construct($debug=false, $assetRevision="0-0-0")
@@ -45,6 +47,7 @@
             $this->assetRevision = $this->constant($assetRevision)->protect("Asset revision ist set in Context and cannot be changed.");
 
             $this->addSection(new DiSection_Extends());
+            $this->addSection(new DiSection_Plugins());
             $this->addSection(new DiSection_Bind());
             $this->addSection(new DiSection_Const());
             $this->addSection(new DiSection_Tpl());

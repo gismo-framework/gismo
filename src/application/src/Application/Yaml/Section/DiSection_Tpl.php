@@ -42,8 +42,9 @@ class DiSection_Tpl implements DiSection
             throw new \InvalidArgumentException("bind accepts only one string argument.");
         if ( ! $container instanceof Context)
             throw new \InvalidArgumentException("Tpl parser requires container to be Context");
-
-        $container[$sectionName] = $container->template($curFile->xpath($data));
+        $fileName = $curFile->xpath($data);
+        $fileName = str_replace("@@", $sectionName, $fileName);
+        $container[$sectionName] = $container->template($fileName);
         return true;
     }
 

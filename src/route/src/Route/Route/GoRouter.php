@@ -49,7 +49,7 @@
         
         private function _routeToPreg ($in) {
             $in = preg_replace("|\\:\\:([a-zA-Z0-9\\_]+)|", '(?<$1>.*)', $in);
-            $in = preg_replace("|\\:([a-zA-Z0-9\\_]+)|", '(?<$1>[^/])', $in);
+            $in = preg_replace("|\\:([a-zA-Z0-9\\_]+)|", '(?<$1>[^/]*)', $in);
             return $in;
         }
 

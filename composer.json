@@ -22,7 +22,8 @@
         "psr/cache": "~1.0",
         "phore/annotations": "*",
         "phore/di-base": "*",
-        "phore/file": "*"
+        "phore/file": "*",
+        "phore/cli": "*"
     },
     "autoload": {
         "psr-4": {

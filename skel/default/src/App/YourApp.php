@@ -10,6 +10,7 @@
     use Golafix\Conf\DotGolafixYml;
     use Golafix\Conf\GolafixRouter;
     use Golafix\Conf\ZipPool;
+    use Phore\Cli\CliController;
 
     /**
      * Created by PhpStorm.
@@ -34,6 +35,15 @@
             $plugin->onContextInit($c);
         }
 
+
+        public function runCmd (array $mockParams=null) {
+            $context = $this->mContext;
+
+            $ctrl = $context["cli.controller"];
+            if ( ! $ctrl instanceof CliController)
+                throw new \InvalidArgumentException("'cli.controller' should be of Type CliController");
+            $ctrl->dispatch($mockParams);
+        }
 
         public function run(Request $request) {
             $p = $this->mContext;

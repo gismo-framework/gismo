@@ -154,6 +154,14 @@
             return $fn(...$paramValues);
         }
 
+
+        public function import (self $container) {
+            $this->diDefinedSections = $container->diDefinedSections;
+            $this->diDef = $container->diDef;
+            $this->diProvider = $container->diProvider;
+        }
+
+
         /**
          * Create a new Instance of a class calling the Constructor.
          *

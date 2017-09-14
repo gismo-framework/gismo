@@ -16,6 +16,8 @@
 
     interface App {
 
+        public function runCmd ();
+
         public function run(Request $request);
 
     }

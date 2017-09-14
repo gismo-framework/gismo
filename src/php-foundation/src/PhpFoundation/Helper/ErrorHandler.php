@@ -52,7 +52,7 @@
                 set_exception_handler([ErrorHandler::class, "____gis_exception_handler_http"]);
                // set_error_handler("____gis_error_handler_http");
             } else {
-                set_exception_handler([ErrorHandler::class,"____gis_exception_handler_cli"]);
+                set_exception_handler([ErrorHandler::class,"____gis_exception_handler_http"]);
                 //set_error_handler("____gis_error_handler_cli");
             }
         }
