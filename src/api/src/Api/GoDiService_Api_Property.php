@@ -9,7 +9,7 @@
 
     namespace Gismo\Component\Api;
 
-
+    use Gismo\Component\Api\Container\Procedure;
     use Gismo\Component\Di\DiContainer;
 
     class GoDiService_Api_Property {
@@ -26,11 +26,16 @@
         }
 
 
-        public function add($bind, $route=null) {
+
+
+
+        public function define(string $bind, string $route=null) : Procedure {
 
         }
 
-        public function call ($bind, array $parameters) {
+
+
+        public function call (string $bind, array $parameters) {
 
         }
 

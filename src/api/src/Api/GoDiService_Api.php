@@ -13,7 +13,7 @@
      * Class GoDiService_Route
      * @package Gismo\Component\Api
      *
-     * @property GoDiService_Route_Property $route
+     * @property GoDiService_Api_Property $api
      */
     trait GoDiService_Api {
 
@@ -21,7 +21,7 @@
          * Called automaticly from dependency injector
          */
         private function __di_init_service_route () {
-            $this->api = $this->constant(new GoDiService_Route_Property($this));
+            $this->api = $this->constant(new GoDiService_Api_Property($this));
         }
 
     }

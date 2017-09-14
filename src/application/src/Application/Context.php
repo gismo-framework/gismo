@@ -10,13 +10,12 @@
 
     
 
-    use Gismo\Component\Application\Service\GoDiService_Api;
+    use Gismo\Component\Api\GoDiService_Api;
     use Gismo\Component\Application\Service\GoDiService_App;
     use Gismo\Component\Application\Service\GoDiService_Asset;
     use Gismo\Component\Application\Service\GoDiService_Cli;
     use Gismo\Component\Application\Service\GoDiService_DevTools;
     use Gismo\Component\Application\Service\GoDiService_Event;
-    use Gismo\Component\Application\Service\GoDiService_Partial;
     use Gismo\Component\Application\Service\GoDiService_Template;
     use Gismo\Component\Application\Yaml\Section\DiSection_Bind;
     use Gismo\Component\Application\Yaml\Section\DiSection_Const;

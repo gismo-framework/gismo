@@ -21,6 +21,8 @@
             // Entwicklerseite
             if ($context instanceof FrontendContext) {
 
+                $context->api->define("api.findDebugger")->begin();
+
                 $context->route->add ("/debug", function(Context $di) {
                     echo "<h1>Golafix Debugger</h1>";
                     var_dump($di);
